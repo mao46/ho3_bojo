@@ -1,0 +1,772 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #e3e3db;
+}
+
+a,p{
+    text-decoration: none;
+    color: #1f1f1f;
+    font-family: "Suisse Int1";
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.02rem;
+}
+
+img {
+    max-width: 100%;
+    height: 100%;
+    object-fit: cover;
+    backface-visibility: hidden;
+}
+
+
+.nav-links {
+    display: flex;
+    gap: 2em; /* 控制連結之間的間距 */
+}
+
+.nav-links a,
+.logo,
+.nav-download {
+    text-decoration: none;
+    color: #1f1f1f;
+    font-family: "Suisse Int1";
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.02rem;
+}
+
+footer {
+    position: absolute;
+    left: 0;
+    width: 100vw;
+    padding: 2em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 2;
+}
+
+nav {
+    top: 0;
+    /* 確保背景顏色，如果需要的話 */
+    /* background-color: #f8f8f8; */ /* 範例背景色 */
+}
+
+footer {
+    bottom: 0;
+} 
+
+.container {
+    position: relative;
+    width: 100vw;
+    height: 100vh; /* 改為 100vh 而非 100svh */
+    overflow: hidden;
+}
+
+.gallery {
+    position: absolute;
+    top: 30px; /* 靠近 header 下方，可依需求微調 */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80vw;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.gallery img {
+    position: absolute; /* 允許圖片疊加 */
+    max-width: 100%; /* 圖片最大寬度為畫廊寬度 */
+    max-height: 100%; /* 圖片最大高度為畫廊高度 */
+    object-fit: contain; /* 保持圖片比例並完整顯示 */
+    border-radius: 10px; /* 可選：為圖片添加圓角 */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* 可選：為圖片添加陰影 */
+}
+
+.gallery-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* transform-style:preserve-3d; */ /* 移除以簡化 */
+    /* perspective: 2000px; */ /* 移除以簡化 */
+    will-change: transform;
+}
+
+/* 移除 .card 樣式，因為不再使用卡片 */
+
+.title-container {
+    position: fixed;
+    bottom: 25px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 42px;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.title-container p{
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    font-size: 36px;
+    letter-spacing: -0.05rem;
+}
+
+.word{
+    position: relative;
+    display: inline-block;
+    will-change: transform;
+}
+
+.preview-img {
+    max-width: 80%;
+    max-height: 80%;
+    object-fit: contain;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+/* SHARE Page Styles */
+#share-content {
+    padding-top: 120px; /* Increased padding for more space */
+    padding-bottom: 120px; /* Increased padding for more space */
+    background-color: #f7f7f5; /* Lighter background for the content area */
+}
+
+.share-grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Slightly larger min card width */
+    gap: 2.5em; /* Increased gap */
+    padding: 2.5em;
+    max-width: 1300px; /* Slightly wider max width */
+    margin: 0 auto; /* Center the grid */
+}
+
+.share-card {
+    background-color: #ffffff; /* Clean white background */
+    border-radius: 20px; /* Softer, larger rounded corners */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08); /* Softer, more diffused shadow for a premium feel */
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover */
+}
+
+.share-card:hover {
+    transform: translateY(-5px); /* Subtle lift effect on hover */
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12); /* Enhanced shadow on hover */
+}
+
+.share-card img {
+    width: 100%;
+    height: 280px; /* Increased image height */
+    object-fit: cover;
+    border-bottom: 1px solid #f0f0f0; /* Subtle separator for image */
+}
+
+.share-card .card-content {
+    padding: 1.5em; /* Increased padding */
+    flex-grow: 1;
+}
+
+.share-card .card-content h3 {
+    font-family: "Suisse Int1", sans-serif; /* Consistent with nav font */
+    font-size: 18px; /* Slightly larger title */
+    font-weight: 600;
+    color: #1f1f1f; /* Darker text for titles */
+    margin-bottom: 0.5em;
+}
+
+.share-card .card-content p {
+    font-family: 'Noto Sans', sans-serif;
+    color: #555; /* Softer text color */
+    font-size: 15px; /* Slightly larger paragraph text */
+    line-height: 1.6;
+    margin-bottom: 1em;
+}
+
+.share-card .card-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.8em; /* Increased gap between buttons */
+    padding: 0 1.5em 1.5em; /* Padding adjusted */
+    /* border-top: 1px solid #f0f0f0; */ /* Removed top border for a cleaner look if content provides enough separation */
+}
+
+.share-card .card-actions button {
+    background-color: transparent;
+    border: 2px solid #AEDD5B; /* Bright accent color for primary action */
+    color: #AEDD5B;
+    padding: 0.6em 1.2em; /* Slightly larger buttons */
+    border-radius: 10px; /* Softer button corners */
+    cursor: pointer;
+    font-family: 'Noto Sans', sans-serif;
+    font-weight: 700; /* Bolder text */
+    font-size: 14px;
+    letter-spacing: 0.03em;
+    transition: all 0.3s ease;
+}
+
+.share-card .card-actions button.favorite-btn {
+    border-color: #FFB6C1; /* Example: Light Pink for secondary action or different emphasis */
+    color: #FFB6C1;
+}
+
+.share-card .card-actions button:hover {
+    background-color: #AEDD5B;
+    color: #ffffff;
+    transform: translateY(-2px); /* Button lift on hover */
+    box-shadow: 0 4px 10px rgba(174, 221, 91, 0.4); /* Shadow for the accent color */
+}
+
+.share-card .card-actions button.favorite-btn:hover {
+    background-color: #FFB6C1;
+    color: #ffffff;
+    box-shadow: 0 4px 10px rgba(255, 182, 193, 0.4);
+}
+
+/* About Page Specific Styles */
+.about-page-content {
+    padding-top: 80px; /* 為固定導覽列留出空間 */
+    padding-bottom: 60px;
+    background-color: #FDF8F4; /* 米白背景，更柔和 */
+    color: #333; /* 主要文字顏色 */
+    font-family: 'Noto Sans TC', sans-serif; /* 統一字體 */
+}
+
+.about-hero {
+    text-align: center;
+    padding: 60px 20px;
+    /* background-color: #fff; */ /* 移除區塊背景色 */
+    margin-bottom: 40px;
+    /* border-bottom: 1px solid #eee; */ /* 移除區塊底部線條 */
+}
+
+.hero-placeholder-image {
+    width: 150px; /* 示意大小 */
+    height: 150px;
+    background-color: #B0D9EA; /* 淡藍色示意 */
+    border-radius: 50%; /* 圓形示意 */
+    margin: 0 auto 20px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: bold;
+}
+
+.about-hero h1 {
+    font-family: 'YourCustomHandwrittenFont', 'Noto Sans TC', sans-serif; /* 您的手寫字體 */
+    font-size: 2.8em;
+    color: #AEDD5B; /* 草綠色標題 */
+    margin-bottom: 10px;
+}
+
+.about-hero .subtitle {
+    font-size: 1.2em;
+    color: #555;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.about-section {
+    padding: 40px 0;
+}
+
+.section-container {
+    max-width: 960px; /* 內容最大寬度 */
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.about-section h2 {
+    font-family: 'YourCustomHandwrittenFont', 'Noto Sans TC', sans-serif;
+    font-size: 2.2em;
+    color: #FFB699; /* 粉橘色小標題 */
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative; /* 保持 relative 以便偽元素定位 */
+}
+
+/* 為標題添加裝飾線 */
+.about-section h2::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background-color: #AEDD5B; /* 草綠色 */
+    margin: 10px auto 0;
+    border-radius: 2px;
+    /* 移除 position: absolute; 如果之前有，確保它跟隨標題流動 */
+}
+
+
+.philosophy-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.philosophy-item {
+    /* background-color: #fff; */ /* 移除背景色 */
+    padding: 30px;
+    border-radius: 16px;
+    /* box-shadow: 0 5px 15px rgba(0,0,0,0.05); */ /* 移除陰影 */
+    border: 1px solid #e0e0e0; /* 添加邊框 */
+    text-align: center;
+}
+
+.philosophy-icon-placeholder {
+    width: 80px;
+    height: 80px;
+    background-color: #FFB699; /* 粉橘色示意 */
+    border-radius: 50%;
+    margin: 0 auto 20px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: bold;
+}
+
+.philosophy-item h3 {
+    font-size: 1.5em;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.philosophy-item p {
+    font-size: 1em;
+    line-height: 1.6;
+    color: #555;
+}
+
+/* Timeline Styles */
+.timeline {
+    list-style: none;
+    padding: 0;
+    position: relative;
+    margin-top: 20px;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 10px; /* 調整線條位置 */
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: #AEDD5B; /* 草綠色時間線 */
+    border-radius: 2px;
+}
+
+.timeline-item {
+    margin-bottom: 30px;
+    position: relative;
+    padding-left: 40px; /* 為時間線標記留出空間 */
+}
+
+.timeline-marker {
+    content: '';
+    position: absolute;
+    left: 0px; /* 調整標記點位置 */
+    top: 5px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #FFB699; /* 粉橘色標記點 */
+    border: 3px solid #FDF8F4; /* 米白邊框，使其與背景融合 */
+    z-index: 1;
+}
+
+.timeline-content {
+    /* background-color: #fff; */ /* 移除背景色 */
+    padding: 20px;
+    border-radius: 16px;
+    /* box-shadow: 0 5px 15px rgba(0,0,0,0.05); */ /* 移除陰影 */
+    border: 1px solid #e0e0e0; /* 添加邊框 */
+}
+
+.timeline-content h4 {
+    margin-top: 0;
+    font-size: 1.3em;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.timeline-content p {
+    font-size: 1em;
+    line-height: 1.6;
+    color: #555;
+}
+
+/* Store Locations Styles */
+.location-tabs {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.location-tabs .button-secondary {
+    margin: 0 10px;
+}
+
+.location-tabs .button-secondary.active {
+    background-color: #AEDD5B; /* 草綠 */
+    color: #fff;
+    border-color: #AEDD5B;
+}
+
+.location-details {
+    display: none; /* JS 會控制 active */
+    /* background-color: #fff; */ /* 移除背景色 */
+    padding: 30px;
+    border-radius: 16px;
+    /* box-shadow: 0 5px 15px rgba(0,0,0,0.05); */ /* 移除陰影 */
+    border: 1px solid #e0e0e0; /* 添加邊框 */
+    margin-top: 20px;
+}
+
+.location-details.active {
+    display: block;
+}
+
+.location-map-placeholder {
+    height: 150px; /* 示意高度 */
+    background-color: #B0D9EA; /* 淡藍 */
+    border-radius: 8px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: bold;
+}
+
+.location-details h3 {
+    font-size: 1.5em;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.location-details p {
+    font-size: 1em;
+    line-height: 1.7;
+    color: #555;
+}
+
+/* Help Page Specific Styles */
+.help-page-content {
+    padding: 100px 20px 40px; /* 增加頂部 padding 給 header */
+    max-width: 800px; /* 稍微調整最大寬度 */
+    margin: 0 auto;
+    font-family: 'Noto Sans TC', sans-serif;
+}
+
+.help-page-content h1 {
+    text-align: center;
+    color: var(--primary-color, #AEDD5B); /* 使用 CSS 變數，預設草綠 */
+    margin-bottom: 50px;
+    font-size: 2.8em; /* 調整字體大小 */
+    font-weight: 700;
+}
+
+.help-section {
+    /* background-color: #fff; */ /* 移除背景色 */
+    padding: 0; /* 移除內部 padding，由子元素控制 */
+    margin-bottom: 50px; /* 增加區塊間距 */
+    border-radius: var(--border-radius-large, 16px);
+    /* box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); */ /* 移除陰影 */
+}
+
+.help-section h2 {
+    color: var(--secondary-color, #FFB699); /* 使用 CSS 變數，預設粉橘 */
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--accent-color-light, #B0D9EA); /* 使用 CSS 變數，預設淡藍 */
+    font-size: 2em; /* 調整字體大小 */
+    font-weight: 600;
+}
+
+/* Accordion styles for Help Page */
+.help-section .accordion .accordion-item {
+    margin-bottom: 15px;
+    border: 1px solid #d1d1d1; /* 稍微加深邊框顏色 */
+    border-radius: var(--border-radius-medium, 12px); /* 統一圓角 */
+    background-color: #fff; /* 確保背景為白色 */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06); /* 添加細微陰影 */
+}
+
+.help-section .accordion .accordion-header {
+    background-color: transparent; /* 標頭背景透明 */
+    color: #333;
+    cursor: pointer;
+    padding: 18px 25px; /* 調整 padding */
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    font-size: 1.2em; /* 調整字體大小 */
+    font-weight: 500; /* 調整字重 */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: var(--border-radius-medium, 12px); /* 確保標頭也有圓角 */
+    transition: background-color 0.3s ease;
+}
+
+.help-section .accordion .accordion-header:hover {
+    background-color: #f9f9f9; /* 滑鼠懸停時的背景色 */
+}
+
+.help-section .accordion .accordion-icon {
+    font-size: 1.1em; /* 調整圖標大小 */
+    transition: transform 0.3s ease-out; /* 平滑過渡 */
+    color: var(--primary-color, #AEDD5B);
+}
+
+.help-section .accordion .accordion-header.active .accordion-icon {
+    transform: rotate(180deg); /* 圖標旋轉 */
+}
+
+.help-section .accordion .accordion-content {
+    padding: 0 25px 20px; /* 調整 padding */
+    background-color: transparent; /* 內容背景透明 */
+    display: none;
+    line-height: 1.7;
+    font-size: 1em;
+    color: #555;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out, padding 0.4s ease-out; /* 平滑過渡 */
+}
+
+.help-section .accordion .accordion-content.active {
+    display: block; /* 確保 active 時是 block */
+    max-height: 500px; /* 或者一個足夠大的值 */
+    padding-top: 15px;
+    padding-bottom: 20px;
+}
+
+/* Form Styles for Help Page */
+.help-section .form-group {
+    margin-bottom: 25px;
+}
+
+.help-section .form-group label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600; /* 加粗標籤 */
+    color: #444;
+    font-size: 1.05em;
+}
+
+.help-section .form-group input[type="text"],
+.help-section .form-group input[type="email"],
+.help-section .form-group textarea {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: var(--border-radius-medium, 12px); /* 統一圓角 */
+    box-sizing: border-box;
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: 1em;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.help-section .form-group input[type="text"]:focus,
+.help-section .form-group input[type="email"]:focus,
+.help-section .form-group textarea:focus {
+    border-color: var(--primary-color, #AEDD5B);
+    box-shadow: 0 0 0 3px rgba(174, 221, 91, 0.25); /* 草綠色 focus 效果 */
+    outline: none;
+}
+
+.help-section .form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.help-section .button-primary {
+    background-color: var(--accent-color, #B0D9EA); /* 淡藍色 */
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: var(--border-radius-large, 16px); /* 統一圓角 */
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-decoration: none;
+    display: inline-flex; /* 為了 SVG 圖標 */
+    align-items: center;
+    justify-content: center;
+}
+
+.help-section .button-primary:hover {
+    background-color: #005f73; /* 加深淡藍色 */
+    transform: translateY(-2px);
+}
+
+.form-illustration {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.form-illustration img, .form-illustration .placeholder-icon {
+    width: 40px; /* 調整圖示大小 */
+    height: 40px;
+    margin-right: 15px;
+    border-radius: 50%; /* 圓形圖示 */
+    background-color: #f0f0f0; /* 預設背景 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8em;
+    color: #777;
+}
+
+/* Success Animation for Form Submission */
+.form-success-message {
+    display: none; /* Initially hidden */
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: var(--border-radius-medium, 12px);
+    background-color: #e6ffed;
+    border: 1px solid #b2fcc2;
+}
+
+.form-success-message .checkmark {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: block;
+    stroke-width: 2;
+    stroke: #4CAF50;
+    stroke-miterlimit: 10;
+    box-shadow: inset 0px 0px 0px #4CAF50;
+    animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
+    position:relative;
+    margin: 0 auto 10px auto;
+}
+
+.form-success-message .checkmark__circle {
+    stroke-dasharray: 166;
+    stroke-dashoffset: 166;
+    stroke-width: 2;
+    stroke-miterlimit: 10;
+    stroke: #4CAF50;
+    fill: none;
+    animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.form-success-message .checkmark__check {
+    transform-origin: 50% 50%;
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+}
+
+@keyframes stroke {
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes scale {
+    0%, 100% {
+        transform: none;
+    }
+    50% {
+        transform: scale3d(1.1, 1.1, 1);
+    }
+}
+
+@keyframes fill {
+    100% {
+        box-shadow: inset 0px 0px 0px 30px #4CAF50;
+    }
+}
+
+.form-success-message p {
+    color: #2e7d32;
+    font-weight: bold;
+}
+
+/* Footer adjustments if needed */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #f1f1f1; /* 保持與其他頁面一致 */
+    color: #555;
+    margin-top: 40px;
+}
+
+footer p {
+    margin: 5px 0;
+}
+
+header {
+    position: relative;
+    top: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #ccc;
+    background-color: transparent;
+}
+
+header .logo {
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    text-decoration: none;
+    color: #1f1f1f;
+    font-family: "Suisse Int1";
+}
+
+header nav .nav-links {
+    display: flex;
+    gap: 2em;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+header nav .nav-links a {
+    text-decoration: none;
+    color: #1f1f1f;
+    font-family: "Suisse Int1";
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.02rem;
+    transition: color 0.3s ease;
+}
+
+header nav .nav-links a:hover {
+    color: #f46c6c;
+}
+body.no-scroll {
+    overflow-y: hidden;
+}

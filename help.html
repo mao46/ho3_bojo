@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HELP - Silhouette Stock</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="animations.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <style>
+        .accordion-header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          position: relative;
+          width: 100%;
+        }
+
+        .accordion-header span:first-child {
+          flex-grow: 1;
+        }
+
+        .accordion-icon {
+          margin-left: auto;
+          padding-right: 2rem;
+          color: #AEDD5B;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="./index.html" class="logo">
+            Silhouette Stock
+        </a>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="./index.html">SHOP</a></li>
+                <li><a href="./share.html">SHARE</a></li>
+                <li><a href="./about.html">ABOUT</a></li>
+                <li><a href="./help.html" class="active">HELP</a></li>
+                <li><a href="./cart.html">CART</a></li>
+                <li><a href="./information.html">INFORMATION</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="help-page-content">
+        <h1>購物戰士支援站</h1>
+
+        <section id="faq" class="help-section fade-in-up">
+            <h2>常見問題 (FAQ)</h2>
+            <div class="accordion">
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span>問題一：關於帳號問題？</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-content">
+                        <p>若您遇到帳號相關問題，例如無法登入、忘記密碼等，請嘗試點擊「忘記密碼」按鈕，或透過下方的聯絡表單與我們聯繫。我們將盡快為您處理。</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span>問題二：訂單相關問題？</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-content">
+                        <p>關於訂單查詢、修改、取消，或是退換貨需求，您可以登入後至「我的訂單」頁面操作。若有其他疑問，請隨時透過聯絡表單告知我們，客服團隊會協助您。</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span>問題三：商品配送方式？</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-content">
+                        <p>我們提供多種配送方式，包含宅配到府、超商取貨等。詳細的配送選項、預計到貨時間與運費計算，請參考結帳頁面的說明。部分特殊商品可能會有不同的配送限制。</p>
+                    </div>
+                </div>
+                 <div class="accordion-item">
+                    <button class="accordion-header">
+                        <span>問題四：如何追蹤我的包裹？</span>
+                        <span class="accordion-icon">▼</span>
+                    </button>
+                    <div class="accordion-content">
+                        <p>商品寄出後，我們會將包裹追蹤碼以 Email 方式寄送給您。您可以使用此追蹤碼至相應的物流公司網站查詢最新的配送狀態。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="customer-feedback" class="help-section fade-in-up">
+            <h2>客戶回饋</h2>
+            <div class="form-illustration">
+                <!-- 您可以將下面的 div 替換成 img 標籤 -->
+                <div class="placeholder-icon">部長寫信ICON</div> 
+                <p>您的寶貴意見是我們進步的動力！</p>
+            </div>
+            <form id="feedback-form">
+                <div class="form-group">
+                    <label for="feedback-name">您的稱呼：</label>
+                    <input type="text" id="feedback-name" name="feedback-name" placeholder="例如：陳部長" required>
+                </div>
+                <div class="form-group">
+                    <label for="feedback-email">電子郵件：</label>
+                    <input type="email" id="feedback-email" name="feedback-email" placeholder="example@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="feedback-message">您的回饋：</label>
+                    <textarea id="feedback-message" name="feedback-message" rows="5" placeholder="請在此輸入您的建議或感想..." required></textarea>
+                </div>
+                <button type="submit" class="button-primary">
+                    <svg class="icon-send" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" style="margin-right: 8px;"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path></svg>
+                    提交回饋
+                </button>
+            </form>
+            <div id="feedback-success" class="form-success-message">
+                <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                    <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+                    <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                </svg>
+                <p>感謝您的回饋！</p>
+            </div>
+        </section>
+
+        <section id="contact-form-section" class="help-section fade-in-up">
+            <h2>聯絡我們</h2>
+             <div class="form-illustration">
+                <div class="placeholder-icon">客服ICON</div>
+                <p>有任何問題嗎？請填寫下表，我們會盡快回覆您。</p>
+            </div>
+            <form id="contact-form">
+                <div class="form-group">
+                    <label for="contact-name">您的姓名：</label>
+                    <input type="text" id="contact-name" name="contact-name" placeholder="王小明" required>
+                </div>
+                <div class="form-group">
+                    <label for="contact-email">電子郵件：</label>
+                    <input type="email" id="contact-email" name="contact-email" placeholder="hello@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="contact-subject">主旨：</label>
+                    <input type="text" id="contact-subject" name="contact-subject" placeholder="例如：訂單問題、合作詢問" required>
+                </div>
+                <div class="form-group">
+                    <label for="contact-message">訊息內容：</label>
+                    <textarea id="contact-message" name="contact-message" rows="6" placeholder="請詳細描述您的問題或需求..." required></textarea>
+                </div>
+                <button type="submit" class="button-primary">
+                     <svg class="icon-send" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" style="margin-right: 8px;"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path></svg>
+                    發送訊息
+                </button>
+            </form>
+            <div id="contact-success" class="form-success-message">
+                 <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                    <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+                    <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                </svg>
+                <p>感謝您的訊息，我們會盡快回覆！</p>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // GSAP fade in up animation on scroll
+        gsap.utils.toArray('.fade-in-up').forEach((elem) => {
+            gsap.fromTo(elem, 
+                { opacity: 0, y: 50 }, 
+                {
+                    opacity: 1, 
+                    y: 0, 
+                    duration: 0.8, 
+                    ease: 'power3.out',
+                    scrollTrigger: {
+                        trigger: elem,
+                        start: 'top 85%', // 當元素頂部進入視窗 85% 時觸發
+                        toggleActions: 'play none none none',
+                    }
+                }
+            );
+        });
+
+        // Accordion JavaScript
+        const accordionItems = document.querySelectorAll('.help-section .accordion-item');
+        accordionItems.forEach(item => {
+            const header = item.querySelector('.accordion-header');
+            const content = item.querySelector('.accordion-content');
+            const icon = header.querySelector('.accordion-icon');
+
+            header.addEventListener('click', () => {
+                const isActive = header.classList.contains('active');
+
+                // Close other active accordions if you want only one open at a time
+                // accordionItems.forEach(otherItem => {
+                //     if (otherItem !== item) {
+                //         otherItem.querySelector('.accordion-header').classList.remove('active');
+                //         otherItem.querySelector('.accordion-content').classList.remove('active');
+                //         otherItem.querySelector('.accordion-content').style.maxHeight = null;
+                //     }
+                // });
+
+                header.classList.toggle('active');
+                content.classList.toggle('active');
+                
+                if (content.classList.contains('active')) {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                    content.style.paddingTop = "15px"; // Ensure padding is applied when opening
+                    content.style.paddingBottom = "20px";
+                } else {
+                    content.style.maxHeight = null;
+                    content.style.paddingTop = "0";
+                    content.style.paddingBottom = "0";
+                }
+            });
+        });
+
+        // Form submission with success animation
+        function handleFormSubmit(formId, successMessageId) {
+            const form = document.getElementById(formId);
+            const successMessage = document.getElementById(successMessageId);
+
+            if (form) {
+                form.addEventListener('submit', function(event) {
+                    event.preventDefault();
+                    // Simulate form submission
+                    console.log(`Form ${formId} submitted`);
+                    
+                    // Hide form, show success message
+                    form.style.display = 'none';
+                    successMessage.style.display = 'block';
+                    
+                    // Optional: Reset form after a delay and hide success message
+                    setTimeout(() => {
+                        form.reset();
+                        // form.style.display = 'block'; // Uncomment to show form again
+                        // successMessage.style.display = 'none'; // Uncomment to hide message
+                    }, 5000); // Adjust delay as needed
+                });
+            }
+        }
+
+        handleFormSubmit('feedback-form', 'feedback-success');
+        handleFormSubmit('contact-form', 'contact-success');
+
+    </script>
+</body>
+</html>

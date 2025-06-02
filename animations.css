@@ -1,0 +1,220 @@
+/* 基本導覽列樣式 */
+header {
+    /* background-color: #fff; */ /* 移除背景色 */
+    padding: 15px 20px; /* 稍微調整 padding */
+    /* box-shadow: 0 2px 4px rgba(0,0,0,0.1); */ /* 移除陰影 */
+    border-bottom: 1px solid #e0e0e0; /* 添加底部線條 */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000; /* 確保導覽列在最上層 */
+    background-color: rgba(255, 255, 255, 0.85); /* 使用帶透明度的白色背景，以便在捲動時仍能看到內容 */
+    backdrop-filter: blur(10px); /* 毛玻璃效果 */
+    -webkit-backdrop-filter: blur(10px); /* 兼容 Safari */
+}
+
+.logo a img {
+    height: 50px; /* Logo 高度 */
+    transition: transform 0.3s ease-out; /* Logo 放大動畫 */
+}
+
+.logo a:hover img {
+    transform: scale(1.1); /* 滑鼠懸停時放大 Logo */
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+nav ul li {
+    margin-left: 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #333; /* 連結文字顏色 */
+    font-weight: bold;
+    padding: 8px 12px;
+    border-radius: 8px; /* 圓角 */
+    transition: background-color 0.3s ease-out, color 0.3s ease-out, transform 0.2s cubic-bezier(0.23, 1, 0.32, 1), border-bottom 0.3s ease-out; /* 平滑過渡效果, 新增 border-bottom */
+    font-family: 'Noto Sans TC', sans-serif; /* 使用 Noto Sans 字體 */
+    position: relative; /* 為了底線定位 */
+    border-bottom: 2px solid transparent; /* 預設透明底線 */
+}
+
+/* 導覽列連結滑鼠懸停效果 */
+nav ul li a:hover {
+    /* background-color: #AEDD5B; */ /* 移除背景色變化，改為指定色 */
+    color: #F46C6C; /* hover 時變色為紅 #F46C6C */
+    transform: translateY(-2px); /* 輕微向上移動 */
+}
+
+/* 當前活動頁面連結樣式 */
+nav ul li a.active {
+    color: #333; /* 活動頁面文字顏色保持預設或指定 */
+    border-bottom: 2px solid #AEDD5B; /* 活動頁用底線顯示，顏色為草綠 */
+}
+
+/* 下載按鈕樣式 (如果有的話) */
+.nav-download button, /* 針對新的 header 結構中的 button */
+.download-button a { /* 保持對舊結構的兼容 */
+    background-color: #B0D9EA; /* 淡藍色背景 */
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease-out, transform 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+    font-family: 'Noto Sans TC', sans-serif;
+    border: none; /* 確保 button 沒有預設邊框 */
+    cursor: pointer; /* 確保 button 有指標手勢 */
+}
+
+.nav-download button:hover, /* 針對新的 header 結構中的 button */
+.download-button a:hover {
+    background-color: #9AC8DB; /* 深一點的淡藍色 */
+    transform: scale(1.05); /* 輕微放大 */
+}
+
+/* 針對沒有 ul li 結構的導覽列 (例如 index.html, share.html 的原始結構) */
+header nav > a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease-out, color 0.3s ease-out, transform 0.2s cubic-bezier(0.23, 1, 0.32, 1), border-bottom 0.3s ease-out; /* 新增 border-bottom */
+    font-family: 'Noto Sans TC', sans-serif;
+    margin-left: 15px; /* 保持間距 */
+    position: relative; /* 為了底線定位 */
+    border-bottom: 2px solid transparent; /* 預設透明底線 */
+}
+
+header nav > a:hover {
+    /* background-color: #AEDD5B; */
+    color: #F46C6C; /* hover 時變色為紅 #F46C6C */
+    transform: translateY(-2px);
+}
+
+header nav > a.active {
+    color: #333;
+    border-bottom: 2px solid #AEDD5B; /* 活動頁用底線顯示，顏色為草綠 */
+}
+
+/* 全局按鈕樣式 */
+.button-primary {
+    background-color: #AEDD5B; /* 草綠 */
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 16px; /* 圓角 16px 以上 */
+    text-decoration: none;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1), background-color 0.3s ease-out;
+    font-family: 'YourCustomHandwrittenFont', 'Noto Sans TC', sans-serif; /* 假設您有自訂手寫字體 */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* 柔和陰影 */
+}
+
+.button-primary:hover {
+    transform: scale(1.05); /* hover 縮放放大 */
+    background-color: #9CC74F; /* 稍微深一點的草綠 */
+}
+
+.button-secondary {
+    background-color: #FDF8F4; /* 米白 */
+    color: #333;
+    padding: 10px 20px;
+    border-radius: 16px;
+    text-decoration: none;
+    font-weight: bold;
+    border: 2px solid #AEDD5B; /* 草綠框線 */
+    cursor: pointer;
+    transition: background-color 0.3s ease-out, color 0.3s ease-out;
+    font-family: 'Noto Sans TC', sans-serif;
+    display: inline-flex; /* 讓 icon 和文字對齊 */
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.button-secondary:hover {
+    background-color: #e9e0da;
+}
+
+.button-secondary .icon {
+    margin-right: 8px; /* icon 和文字間距 */
+    /* 這裡可以放 svg 或 img 的樣式 */
+}
+
+/* 動畫進場效果 */
+.fade-in-up {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.fade-in-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Hover 效果 */
+.card-hover-scale {
+    transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.card-hover-scale:hover {
+    transform: scale(1.05);
+}
+
+.icon-sway:hover {
+    animation: sway 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes sway {
+    from { transform: rotate(-3deg); }
+    to { transform: rotate(3deg); }
+}
+
+/* Accordion 樣式 (基本) */
+.accordion-item {
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 16px; /* 圓角 */
+    overflow: hidden; /* 配合圓角 */
+}
+
+.accordion-header {
+    background-color: #f9f9f9;
+    padding: 15px;
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.accordion-content {
+    padding: 15px;
+    display: none; /* 預設隱藏 */
+    border-top: 1px solid #ddd;
+}
+
+.accordion-item.active .accordion-content {
+    display: block;
+}
+
+.accordion-header::after {
+    content: '+'; /* 預設圖示 */
+    font-size: 1.2em;
+    transition: transform 0.3s ease-out;
+}
+
+.accordion-item.active .accordion-header::after {
+    transform: rotate(45deg);
+}

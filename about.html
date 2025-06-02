@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>關於我們 - Silhouette Stock</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="animations.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script> <!-- 引入 ScrollTrigger -->
+</head>
+<body>
+    <header>
+        <a href="./index.html" class="logo">
+            Silhouette Stock
+        </a>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="./index.html">SHOP</a></li>
+                <li><a href="./share.html">SHARE</a></li>
+                <li><a href="./about.html" class="active">ABOUT</a></li>
+                <li><a href="./help.html">HELP</a></li>
+                <li><a href="./cart.html">CART</a></li>
+                <li><a href="./information.html">INFORMATION</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="about-page-content"> <!-- 使用 main 標籤並給予特定 class -->
+        <section id="hero-about" class="about-hero fade-in-up">
+            <!-- <img src="./image/minister_illustration.png" alt="部長形象插畫" class="hero-image"> -->
+            <div class="hero-placeholder-image">部長形象插畫 (上方)</div>
+            <h1>關於 Silhouette Stock</h1>
+            <p class="subtitle">一個充滿手繪溫度與復古情懷的小舖</p>
+        </section>
+
+        <section id="brand-philosophy" class="about-section fade-in-up">
+            <div class="section-container">
+                <h2>品牌理念</h2>
+                <div class="philosophy-grid">
+                    <div class="philosophy-item card-hover-scale">
+                        <!-- <img src="./image/icon_why_minister.png" alt="為什麼叫部長 icon" class="philosophy-icon"> -->
+                        <div class="philosophy-icon-placeholder">[插畫icon]</div>
+                        <h3>為什麼叫部長？</h3>
+                        <p>這裡放關於「為什麼叫部長」的品牌理念段落文字，風格將會是手繪字感搭配鮮明主色塊，充滿懷舊復古的插畫角色風。</p>
+                    </div>
+                    <div class="philosophy-item card-hover-scale">
+                        <!-- <img src="./image/icon_intention.png" alt="取名背後意圖 icon" class="philosophy-icon"> -->
+                        <div class="philosophy-icon-placeholder">[插畫icon]</div>
+                        <h3>取名背後的意圖</h3>
+                        <p>我們希望透過「部長」這個親切又帶點趣味的稱呼，拉近與顧客的距離，提供充滿溫度與故事的商品。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="founding-story" class="about-section fade-in-up">
+            <div class="section-container">
+                <h2>創立故事</h2>
+                <ul class="timeline">
+                    <li class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content card-hover-scale">
+                            <h4>202X年 - 夢想的萌芽</h4>
+                            <p>部長在一個悠閒的午後，腦中浮現了創立一個充滿獨特風格小物的商店，希望將生活中的美好以手繪的形式分享給大家。</p>
+                        </div>
+                    </li>
+                    <li class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content card-hover-scale">
+                            <h4>202Y年 - 品牌的誕生</h4>
+                            <p>經過無數個夜晚的努力與夥伴們的支持，Silhouette Stock 正式與大家見面！我們堅持原創設計，注重每一個細節。</p>
+                        </div>
+                    </li>
+                    <li class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content card-hover-scale">
+                            <h4>未來展望</h4>
+                            <p>我們將持續帶來更多驚喜與美好的設計，拓展更多有趣的商品線，並期待與更多喜愛我們風格的朋友相遇。</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="store-locations" class="about-section fade-in-up">
+            <div class="section-container">
+                <h2>實體據點</h2>
+                <div class="location-tabs">
+                    <button class="button-secondary location-btn active" data-location="taipei">
+                        <span class="icon">📍</span>台北據點
+                    </button>
+                    <button class="button-secondary location-btn" data-location="taichung">
+                        <span class="icon">📍</span>台中據點
+                    </button>
+                </div>
+                <div class="location-content-wrapper">
+                    <div id="taipei-location" class="location-details active card-hover-scale">
+                        <!-- <img src="./image/taipei_store_illustration.png" alt="台北店面插畫" class="location-illustration"> -->
+                        <div class="location-map-placeholder">[台北店面插畫/地圖icon]</div>
+                        <h3>台北 Silhouette Stock</h3>
+                        <p>地址：台北市信義區可愛路一段123號<br>電話：(02) 1234-5678<br>營業時間：週一至週日 11:00 - 21:00</p>
+                    </div>
+                    <div id="taichung-location" class="location-details card-hover-scale">
+                        <!-- <img src="./image/taichung_store_illustration.png" alt="台中店面插畫" class="location-illustration"> -->
+                        <div class="location-map-placeholder">[台中店面插畫/地圖icon]</div>
+                        <h3>台中 Silhouette Stock</h3>
+                        <p>地址：台中市西區趣味巷456號<br>電話：(04) 8765-4321<br>營業時間：週一至週日 12:00 - 20:00</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // GSAP 動畫
+        if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+            gsap.registerPlugin(ScrollTrigger);
+            gsap.utils.toArray('.fade-in-up').forEach((elem, i) => {
+                gsap.fromTo(elem, 
+                    { opacity: 0, y: 50 }, 
+                    {
+                        opacity: 1, 
+                        y: 0, 
+                        duration: 0.8, 
+                        delay: i * 0.1, // 稍微減少 stagger delay
+                        ease: 'cubic-bezier(0.23, 1, 0.32, 1)',
+                        scrollTrigger: {
+                            trigger: elem,
+                            start: 'top 85%', // 調整觸發點
+                            toggleActions: 'play none none none'
+                        }
+                    }
+                );
+            });
+        } else {
+            console.error('GSAP or ScrollTrigger not loaded');
+        }
+
+        // 實體據點頁籤切換
+        const locationBtns = document.querySelectorAll('.location-btn');
+        const locationDetails = document.querySelectorAll('.location-details');
+
+        locationBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                locationBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const targetLocation = btn.dataset.location;
+                locationDetails.forEach(detail => {
+                    if (detail.id === targetLocation + '-location') {
+                        detail.classList.add('active');
+                    } else {
+                        detail.classList.remove('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

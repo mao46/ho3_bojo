@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CART - Silhouette Stock</title> <!-- 統一品牌名稱 -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="animations.css"> <!-- 添加 animations.css -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script> <!-- 更新 GSAP 版本 -->
+    <!-- 其他可能的JS庫 -->
+</head>
+<body>
+    <header>
+        <a href="./index.html" class="logo">
+            Silhouette Stock
+        </a>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="./index.html">SHOP</a></li>
+                <li><a href="./share.html">SHARE</a></li>
+                <li><a href="./about.html">ABOUT</a></li>
+                <li><a href="./help.html">HELP</a></li>
+                <li><a href="./cart.html" class="active">CART</a></li>
+                <li><a href="./information.html">INFORMATION</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="cart-page-content">
+        <h1>🛒 您的購物車</h1>
+        
+        <!-- 購物車內容將會顯示在這裡 -->
+        <!-- 例如：商品列表、數量調整、總計金額、結帳按鈕等 -->
+        <div class="cart-items">
+            <!-- 範例商品 -->
+            <div class="cart-item">
+                <img src="image/image1.jpg" alt="商品圖片" class="cart-item-image">
+                <div class="cart-item-details">
+                    <h3>商品名稱A</h3>
+                    <p>單價：$100</p>
+                    <input type="number" value="1" min="1">
+                </div>
+                <p class="cart-item-subtotal">小計：$100</p>
+                <button class="remove-item-btn">移除</button>
+            </div>
+            <!-- 更多商品 -->
+        </div>
+
+        <div class="cart-summary">
+            <h3>訂單總計</h3>
+            <p>商品總額：$XXX</p>
+            <p>運費：$YY</p>
+            <h4>總計：$ZZZ</h4><br>
+            <a href="checkout.html" class="checkout-btn">前往結帳</a>
+        </div>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2025 禾山部長. All Rights Reserved.</p>
+    </footer>
+
+    <script src="script.js"></script> 
+    <!-- 如果有針對此頁面的特定JS -->
+</body>
+</html>
+
+<style>
+.cart-page-content {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    font-family: "Suisse Int1", sans-serif;
+    color: #1a1a1a;
+}
+
+.cart-items {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.cart-item {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    background: linear-gradient(to bottom right, #ffffff, #f7f8f5);
+    padding: 1.5rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    border: 1px solid #e1e1e1;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.cart-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+}
+
+.cart-item-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.cart-item-details {
+    flex: 1;
+    margin-left: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.cart-item-details h3 {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin: 0;
+}
+.cart-item-details p {
+    font-size: 0.95rem;
+    margin: 0;
+    color: #666;
+}
+.cart-item-details input[type="number"] {
+    width: 60px;
+    padding: 0.4rem;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.cart-item-subtotal,
+.remove-item-btn {
+    margin-left: 1rem;
+    font-size: 14px;
+}
+
+.cart-item-subtotal {
+    font-weight: bold;
+    color: #333;
+}
+
+.remove-item-btn {
+    background: transparent;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 0.4rem 0.8rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.remove-item-btn:hover {
+    background: #fdd;
+    border-color: #f46c6c;
+}
+
+.cart-summary {
+    margin-top: 2rem;
+    background: #f5f5f0;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border-left: 4px solid #AEDD5B;
+}
+
+.checkout-btn {
+    margin-top: 1rem;
+    background: #AEDD5B;
+    color: #000;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+.checkout-btn:hover {
+    background: #98c94f;
+}
+</style>

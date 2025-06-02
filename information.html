@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INFORMATION - Silhouette Stock</title> <!-- 統一品牌名稱 -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="animations.css"> <!-- 添加 animations.css -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script> <!-- 更新 GSAP 版本 -->
+    <!-- 其他可能的JS庫 -->
+</head>
+<body>
+    <header>
+        <a href="./index.html" class="logo">
+            Silhouette Stock
+        </a>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="./index.html">SHOP</a></li>
+                <li><a href="./share.html">SHARE</a></li>
+                <li><a href="./about.html">ABOUT</a></li>
+                <li><a href="./help.html">HELP</a></li>
+                <li><a href="./cart.html">CART</a></li>
+                <li><a href="./information.html" class="active">INFORMATION</a></li>
+            </ul>
+        </nav>
+    <style>
+    .information-page-content {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+    }
+
+    .accordion {
+        border: 1px solid #ddd;
+        border-radius: 12px;
+        padding: 1.2rem;
+        background: #fff;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        margin-top: 1rem;
+    }
+
+    .accordion-item {
+        margin-bottom: 1rem;
+        border-left: 4px solid #AEDD5B;
+        padding-left: 1rem;
+    }
+
+    .accordion-header {
+        background: transparent;
+        border: none;
+        font-size: 1rem;
+        font-weight: bold;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        padding: 0.5rem 0;
+        color: #1f1f1f;
+        width: 100%;
+        text-align: left;
+    }
+
+    .accordion-icon {
+        font-size: 0.9rem;
+        color: #AEDD5B;
+        margin-left: auto;
+    }
+
+    .accordion-content {
+        display: none;
+        padding: 0.5rem 0 1rem 0;
+        font-size: 0.95rem;
+        color: #444;
+        line-height: 1.6;
+    }
+
+    .inline-illustration {
+        max-width: 150px;
+        margin-top: 0.5rem;
+        border-radius: 8px;
+    }
+
+    #social-contact {
+        margin-top: 2.5rem;
+        padding: 1.5rem;
+        border-radius: 12px;
+        background: #f8f8f8;
+        border-left: 4px solid #AEDD5B;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+        transition: background-color 0.3s ease;
+    }
+
+    #social-contact:hover {
+        background-color: #e6f0c9;
+    }
+
+    /* 區塊標題強化 */
+    #social-contact h2 {
+        position: relative;
+        display: inline-block;
+        padding-bottom: 0.5rem;
+        margin-bottom: 1rem;
+        font-size: 1.4rem;
+        color: #333;
+        border-bottom: 3px solid #AEDD5B;
+    }
+
+    .social-links {
+        margin-bottom: 1rem;
+    }
+
+    /* 統一社群 icon 樣式 */
+    .social-icon {
+        width: 24px;
+        height: 24px;
+        margin-right: 0.5rem;
+        border-radius: 6px;
+        object-fit: contain;
+    }
+
+    #ig-icon {
+        display: inline-block;
+    }
+    #default-ig-icon {
+        width: 24px;
+        height: 24px;
+        background-color: #eee;
+        text-align: center;
+        line-height: 24px;
+        border-radius: 6px;
+        display: inline-block;
+        font-size: 12px;
+        margin-right: 0.5rem;
+    }
+
+    .shopee-link {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        color: #1a1a1a;
+        margin-top: 0.5rem;
+    }
+
+    /* .shopee-link .social-icon { 移除，統一用 .social-icon 樣式 } */
+
+    /* 社群連結 hover 效果與滑入線條動畫 */
+    .social-links a {
+        position: relative;
+        padding: 0.5rem 0;
+        display: inline-flex;
+        align-items: center;
+        transition: color 0.3s ease;
+    }
+
+    .social-links a::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        height: 2px;
+        width: 0;
+        background-color: #AEDD5B;
+        transition: width 0.3s ease;
+    }
+
+    .social-links a:hover::before {
+        width: 100%;
+    }
+
+    .social-links a:hover {
+        color: #679f00;
+    }
+    </style>
+    </header>
+
+    <main class="information-page-content">
+        <h1>ℹ️ INFORMATION</h1>
+
+        <section id="terms-privacy">
+            <h2>條款與隱私政策</h2>
+            <!-- accordion 展開式文字條列 -->
+            <div class="accordion">
+                <div class="accordion-item">
+                    <button class="accordion-header">服務條款 <span class="accordion-icon">▼</span></button>
+                    <div class="accordion-content">
+                        <p>這裡是服務條款的詳細內容...（可插入角色扮演律師或秘書的插畫點綴）</p>
+                        <img src="image/lawyer_illustration.png" alt="律師插畫" class="inline-illustration" style="display:none;"/>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-header">隱私政策 <span class="accordion-icon">▼</span></button>
+                    <div class="accordion-content">
+                        <p>這裡是隱私政策的詳細內容...（可插入角色扮演律師或秘書的插畫點綴）</p>
+                        <img src="image/secretary_illustration.png" alt="秘書插畫" class="inline-illustration" style="display:none;"/>
+                    </div>
+                </div>
+                <!-- 更多條款 -->
+            </div>
+        </section>
+
+        <section id="social-contact">
+            <h2>社群與聯絡</h2>
+            <div class="social-links">
+                <a href="https://www.instagram.com/your_brand_ig/" target="_blank" class="ig-link">
+                    <!-- IG icon 可自繪為部長樣子戴相機 -->
+                    <img src="image/custom_ig_icon.png" alt="Instagram 部長相機" id="ig-icon" class="social-icon" style="display:none;">
+                    <span>追蹤我們的 Instagram</span>
+                    <!-- 預設顯示文字，如果圖片載入失敗 -->
+                    <div id="default-ig-icon">IG</div>
+                </a>
+                <a href="https://s.shopee.tw/8pXVgIokiN" target="_blank" class="shopee-link">
+                    <img src="image/shopee_icon.png" alt="Shopee Icon" class="social-icon">
+                    <span>前往禾山部長的蝦皮賣場</span>
+                </a>
+            </div>
+            <div class="contact-info">
+                <h3>聯絡資訊</h3>
+                <p>Email: contact@yourbrand.com</p>
+                <p>電話: (02) 1234-5678</p>
+                <!-- 更多聯絡方式 -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 品牌名稱. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // Accordion JavaScript
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const content = header.nextElementSibling;
+                const icon = header.querySelector('.accordion-icon');
+                content.style.display = content.style.display === 'block' ? 'none' : 'block';
+                icon.textContent = content.style.display === 'block' ? '▲' : '▼';
+            });
+        });
+
+        // Instagram Icon Hover Animation (GSAP)
+        const igIcon = document.getElementById('ig-icon');
+        const defaultIgIcon = document.getElementById('default-ig-icon');
+        
+        // 檢查圖片是否存在，若存在則顯示圖片，否則顯示預設方塊
+        const customIgImage = new Image();
+        customIgImage.src = 'image/custom_ig_icon.png';
+        customIgImage.onload = () => {
+            if(igIcon) igIcon.style.display = 'inline-block';
+            if(defaultIgIcon) defaultIgIcon.style.display = 'none';
+        };
+        customIgImage.onerror = () => {
+            if(igIcon) igIcon.style.display = 'none';
+            if(defaultIgIcon) defaultIgIcon.style.display = 'inline-block';
+        };
+
+        const targetIcon = igIcon.style.display !== 'none' ? igIcon : defaultIgIcon;
+        if (targetIcon) {
+             targetIcon.addEventListener('mouseenter', () => {
+                gsap.to(targetIcon, { scale: 1.2, duration: 0.3, ease: 'power1.out' });
+            });
+            targetIcon.addEventListener('mouseleave', () => {
+                gsap.to(targetIcon, { scale: 1, duration: 0.3, ease: 'power1.out' });
+            });
+        }
+    </script>
+    <!-- <script src="script.js"></script> -->
+</body>
+</html>

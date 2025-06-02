@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CHECKOUT - Silhouette Stock</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      background: #efefea;
+      font-family: "Suisse Int1", sans-serif;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    header {
+      padding: 1rem 2rem;
+      text-align: center;
+      font-weight: bold;
+    }
+    .checkout-container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+    .step-indicator {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      font-size: 0.95rem;
+      color: #888;
+    }
+    .step-indicator .step.active {
+      color: #000;
+      font-weight: bold;
+    }
+    .login-box {
+      text-align: right;
+      margin-bottom: 1rem;
+      font-size: 0.85rem;
+    }
+    .checkout-main {
+      display: flex;
+      gap: 2rem;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+    .checkout-left,
+    .checkout-right {
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+    .checkout-left {
+      flex: 2;
+      min-width: 300px;
+    }
+    .checkout-right {
+      flex: 1;
+      min-width: 260px;
+    }
+    .product-list {
+      border-top: 1px solid #ddd;
+      margin-top: 1rem;
+    }
+    .product-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 0;
+      border-bottom: 1px solid #eee;
+    }
+    .product-info {
+      flex: 1;
+      display: flex;
+      gap: 1rem;
+    }
+    .product-info img {
+      width: 64px;
+      height: 64px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    .product-info-detail {
+      font-size: 0.9rem;
+    }
+    .product-price {
+      font-size: 0.95rem;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.9rem;
+      margin-bottom: 0.3rem;
+    }
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 0.6rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    .order-summary {
+      font-size: 0.95rem;
+      line-height: 1.8;
+    }
+    .order-summary h4 {
+      margin-top: 1rem;
+    }
+    .checkout-btn {
+      display: block;
+      width: 100%;
+      background: #AEDD5B;
+      border: none;
+      padding: 0.8rem;
+      font-size: 1rem;
+      font-weight: bold;
+      margin-top: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .checkout-btn:hover {
+      background: #91c850;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.8rem;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <header>Silhouette Stock</header>
+  <div class="checkout-container">
+    <div class="step-indicator">
+      <div class="step active">1 購物車</div>
+      <div class="step active">2 填寫資料</div>
+      <div class="step">3 訂單確認</div>
+    </div>
+
+    <div class="login-box">
+      已經是會員？<a href="#">登入後可更方便管理訂單！</a>
+    </div>
+
+    <div class="checkout-main">
+      <div class="checkout-left">
+        <h3>購物車（1件）</h3>
+        <div class="product-list">
+          <div class="product-item">
+            <div class="product-info">
+              <img src="image/image1.jpg" alt="商品圖">
+              <div class="product-info-detail">
+                <p>Professor.E - 25SS | Semi-sheer Vest (Black)</p>
+                <p>尺寸：46</p>
+              </div>
+            </div>
+            <div class="product-price">NT$2,280</div>
+          </div>
+        </div>
+
+        <h3>選擇送貨及付款方式</h3>
+        <div class="form-group">
+          <label>送貨地點</label>
+          <select>
+            <option>台灣</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>送貨方式</label>
+          <select>
+            <option>宅配寄送</option>
+            <option>超商取貨</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>付款方式</label>
+          <select>
+            <option>信用卡（Visa / Master / JCB）</option>
+            <option>LINE Pay</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="checkout-right">
+        <h3>訂單資訊</h3>
+        <div class="order-summary">
+          <p>小計：NT$2,280</p>
+          <p>運費：NT$95</p>
+          <p><a href="#">使用優惠代碼</a></p>
+          <h4>合計：NT$2,375</h4>
+          <button class="checkout-btn">前往結帳</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer>
+    &copy; 2025 禾山部長. All Rights Reserved.
+  </footer>
+</body>
+</html>
