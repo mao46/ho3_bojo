@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <title>全部商品</title>
+    <style>
+      body {
+        margin: 0;
+        background-color: #e3e3db;
+        font-family: Arial, sans-serif;
+      }
+
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 60px 20px;
+      }
+
+      .product-box {
+        width: 320px;
+        text-align: center;
+        padding: 20px;
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+      }
+
+      .product-name,
+      .product-price {
+        font-weight: bold;
+        font-size: 16px;
+        opacity: 0;
+      }
+
+      .product-name {
+        margin-bottom: 20px;
+      }
+
+      .product-price {
+        margin: 20px 0;
+      }
+
+      .image-wrapper {
+        position: relative;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .product-image,
+      .product-image-oval {
+        max-width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      .product-image-oval {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 0;
+        border-radius: 50% / 60%;
+        max-width: 90%;
+        height: auto;
+        z-index: 2;
+      }
+
+      .add-to-bag {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        border: 1.5px solid black;
+        background-color: transparent;
+        padding: 12px 20px;
+        font-weight: bold;
+        font-size: 14px;
+        opacity: 0;
+        gap: 8px;
+        cursor: pointer;
+      }
+
+      .add-to-bag img {
+        width: 18px;
+        height: 18px;
+      }
+
+      /* Hover state */
+      .product-box:hover .product-image {
+        opacity: 0;
+      }
+
+      .product-box:hover .product-image-oval {
+        opacity: 1;
+      }
+
+      .product-box:hover .product-name,
+      .product-box:hover .product-price,
+      .product-box:hover .add-to-bag {
+        opacity: 1;
+      }
+    </style>
+  </head>
+  <header>
+    <a href="./index.html" class="logo">
+      <img src="image/logo1.png" alt="禾山部長 Logo" style="height: 40px" />
+    </a>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="./shop.html">SHOP</a></li>
+        <li><a href="./share.html">SHARE</a></li>
+        <li><a href="./about.html">ABOUT</a></li>
+        <li><a href="./help.html">HELP</a></li>
+        <li><a href="./cart.html">CART</a></li>
+        <li><a href="./information.html" class="active">INFORMATION</a></li>
+      </ul>
+    </nav>
+  </header>
+  <body>
+    <div class="container">
+      <div
+        class="product-box"
+        data-category="tshirt"
+        data-season="summer"
+        data-brand="custom"
+        data-style="top"
+      >
+        <div class="product-name">購物戰士T-shirt（粉色回歸啦！）</div>
+
+        <div class="image-wrapper">
+          <img
+            class="product-image"
+            src="cloth_img\購物戰士T-shirt（粉色回歸啦！）\tw-11134207-7r98t-lzueim1beuic58.jpg"
+            alt="原圖"
+          />
+          <img
+            class="product-image-oval"
+            src="cloth_img\購物戰士T-shirt（粉色回歸啦！）\tw-11134207-7r98y-lzueim1bg93y85.jpg"
+            alt="橢圓圖"
+          />
+        </div>
+
+        <div class="product-price">NT$680</div>
+
+        <button class="add-to-bag">加入購物車</button>
+      </div>
+    </div>
+  </body>
+</html>
