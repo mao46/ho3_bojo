@@ -73,7 +73,7 @@ footer {
 
 .gallery {
     position: absolute;
-    top: 30px; /* 靠近 header 下方，可依需求微調 */
+    top: 10px; /* 靠近 header 下方，可依需求微調 */
     left: 50%;
     transform: translateX(-50%);
     width: 80vw;
