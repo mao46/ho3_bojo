@@ -16,7 +16,7 @@
           </a>
         <nav>
             <ul class="nav-links">
-                <li><a href="./allproduct.html">SHOP</a></li>
+                <li><a href="./index.html">SHOP</a></li>
                 <li><a href="./share.html">SHARE</a></li>
                 <li><a href="./about.html">ABOUT</a></li>
                 <li><a href="./help.html">HELP</a></li>
@@ -63,6 +63,71 @@
     <script src="script.js"></script> 
     <!-- 如果有針對此頁面的特定JS -->
 </body>
+
+<script>
+function renderCart() {
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const container = document.querySelector(".cart-items");
+  const summary = document.querySelector(".cart-summary");
+
+  container.innerHTML = "";
+
+  let total = 0;
+
+  cart.forEach((item, index) => {
+    const price = parseInt(item.price.replace(/[^\d]/g, ''));
+    const subtotal = price * item.quantity;
+    total += subtotal;
+
+    const el = document.createElement("div");
+    el.className = "cart-item";
+    el.innerHTML = `
+      <img src="${item.image}" class="cart-item-image">
+      <div class="cart-item-details">
+        <h3>${item.name}</h3>
+        <p>尺寸：${item.size}</p>
+        <p>單價：${item.price}</p>
+        <label>數量：<input type="number" min="1" value="${item.quantity}" data-index="${index}" class="qty-input"></label>
+      </div>
+      <p class="cart-item-subtotal">小計：NT$${subtotal}</p>
+      <button class="remove-item-btn" data-index="${index}">移除</button>
+    `;
+    container.appendChild(el);
+  });
+
+  summary.innerHTML = `
+    <h3>訂單總計</h3>
+    <p>商品總額：NT$${total}</p>
+    <p>運費：NT$0</p>
+    <h4>總計：NT$${total}</h4>
+    <a href="checkout.html" class="checkout-btn">前往結帳</a>
+  `;
+}
+
+// 數量調整與刪除
+document.addEventListener("input", function (e) {
+  if (e.target.classList.contains("qty-input")) {
+    const index = e.target.dataset.index;
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart[index].quantity = parseInt(e.target.value) || 1;
+    localStorage.setItem("cart", JSON.stringify(cart));
+    renderCart();
+  }
+});
+
+document.addEventListener("click", function (e) {
+  if (e.target.classList.contains("remove-item-btn")) {
+    const index = e.target.dataset.index;
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart.splice(index, 1);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    renderCart();
+  }
+});
+
+document.addEventListener("DOMContentLoaded", renderCart);
+</script>
+
 </html>
 
 <style>
