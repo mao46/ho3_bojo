@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>全部商品</title>
+    <style>
+      body {
+        margin: 0;
+        background-color: #e3e3db;
+        font-family: Arial, sans-serif;
+      }
+
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 60px 20px;
+      }
+
+      .product-box {
+        width: 320px;
+        text-align: center;
+        padding: 20px;
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+      }
+
+      .product-name,
+      .product-price {
+        font-weight: bold;
+        font-size: 16px;
+        opacity: 0;
+      }
+
+      .product-name {
+        margin-bottom: 20px;
+      }
+
+      .product-price {
+        margin: 20px 0;
+      }
+
+      .image-wrapper {
+        position: relative;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .product-image,
+      .product-image-oval {
+        max-width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      .product-image-oval {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 0;
+        border-radius: 50% / 60%;
+        max-width: 90%;
+        height: auto;
+        z-index: 2;
+      }
+
+      .add-to-bag {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        border: 1.5px solid black;
+        background-color: transparent;
+        padding: 12px 20px;
+        font-weight: bold;
+        font-size: 14px;
+        opacity: 0;
+        gap: 8px;
+        cursor: pointer;
+      }
+
+      .add-to-bag:hover {
+        background-color: black;
+        color: white;
+      }
+
+      .add-to-bag img {
+        width: 18px;
+        height: 18px;
+      }
+
+      /* Hover state */
+      .product-box:hover .product-image {
+        opacity: 0;
+      }
+
+      .product-box:hover .product-image-oval {
+        opacity: 1;
+      }
+
+      .product-box:hover .product-name,
+      .product-box:hover .product-price,
+      .product-box:hover .add-to-bag {
+        opacity: 1;
+      }
+      #overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+      }
+
+      #cartModal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%;
+        max-width: 600px;
+        background: white;
+        z-index: 1000;
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+        display: none;
+        overflow: hidden;
+      }
+
+      .modal-content {
+        position: relative;
+        padding: 20px 20px;
+        font-size: 14px;
+        line-height: 1.7;
+        overflow-y: auto;
+        max-height: 80vh;
+        box-sizing: border-box; /* 避免 padding 擠出 */
+      }
+
+      .modal-content h2 {
+        margin-top: 0;
+        font-size: 20px;
+      }
+
+      .modal-content h3 {
+        font-size: 16px;
+        margin-top: 25px;
+      }
+
+      .modal-content select {
+        margin: 8px 0 16px;
+        padding: 8px;
+        font-size: 14px;
+        width: 100%;
+      }
+
+      .modal-content p.modal-price {
+        font-size: 18px;
+        font-weight: bold;
+        margin: 10px 0 25px; /* 上下間距：讓價格與下拉選單之間有空隙 */
+      }
+
+      .modal-content label {
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 6px;
+        display: inline-block;
+      }
+
+      .modal-close {
+        position: absolute;
+        top: 12px;
+        right: 18px;
+        z-index: 10;
+        background: none;
+        border: none;
+        font-size: 20px;
+        font-weight: bold;
+        color: #333;
+        cursor: pointer;
+      }
+
+      .add-cart-btn {
+        margin-top: 30px;
+        width: 100%;
+        padding: 12px;
+        background-color: black;
+        color: white;
+        font-size: 14px;
+        border: none;
+        cursor: pointer;
+        border-radius: 4px;
+      }
+
+      .add-cart-btn:hover {
+        background-color: #333;
+      }
+
+      .carousel {
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+        border-radius: 8px;
+        margin-bottom: 20px;
+      }
+
+      .carousel-track {
+        display: flex;
+        transition: transform 0.4s ease;
+      }
+
+      .carousel-img {
+        width: 100%;
+        max-height: 360px;
+        object-fit: cover;
+        object-fit: contain;
+        flex-shrink: 0;
+      }
+
+      .carousel-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(0, 0, 0, 0.4);
+        color: white;
+        border: none;
+        font-size: 24px;
+        padding: 4px 12px;
+        cursor: pointer;
+        z-index: 10;
+      }
+
+      .carousel-btn.left {
+        left: 10px;
+      }
+
+      .carousel-btn.right {
+        right: 10px;
+      }
+    </style>
+  </head>
+  <header>
+    <a href="./index.html" class="logo">
+      <img src="image/logo1.png" alt="禾山部長 Logo" style="height: 40px" />
+    </a>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="./shop.html">SHOP</a></li>
+        <li><a href="./share.html">SHARE</a></li>
+        <li><a href="./about.html">ABOUT</a></li>
+        <li><a href="./help.html">HELP</a></li>
+        <li><a href="./cart.html">CART</a></li>
+        <li><a href="./information.html" class="active">INFORMATION</a></li>
+      </ul>
+    </nav>
+  </header>
+  <body>
+    <div class="container">
+      <div
+        class="product-box"
+        data-name="購物戰士T-shirt（粉色回歸啦！）"
+        data-price="NT$680"
+        data-sizes="L,XL"
+        data-size-info="L 號：肩寬 50｜胸寬 55｜全長 73｜袖長 22 cm\nXL 號：肩寬 54｜胸寬 58｜全長 77｜袖長 24 cm"
+        data-care="- 反面放入洗衣袋清洗；- 不可浸泡；- 請勿使用強效洗劑；- 深淺色分開洗；- 避免日曬變色"
+        data-notice="- 顏色可能略有差異；- 換尺寸需自付來回運費；- 瑕疵保留包裝可退貨"
+        data-images="cloth_img/購物戰士T-shirt（粉色回歸啦！）/1.jpg,cloth_img/購物戰士T-shirt（粉色回歸啦！）/2.jpg"
+      >
+        <div class="product-name">購物戰士T-shirt（粉色回歸啦！）</div>
+        <div class="image-wrapper">
+          <img
+            class="product-image"
+            src="cloth_img\購物戰士T-shirt（粉色回歸啦！）\1.jpg"
+            alt="原圖"
+          />
+          <img
+            class="product-image-oval"
+            src="cloth_img\購物戰士T-shirt（粉色回歸啦！）\2.jpg"
+            alt="橢圓圖"
+          />
+        </div>
+        <div class="product-price">NT$680</div>
+
+        <button class="add-to-bag">加入購物車</button>
+      </div>
+      <div
+        class="product-box"
+        data-category="tshirt"
+        data-season="summer"
+        data-brand="custom"
+        data-style="top"
+      >
+        <div class="product-name">購物戰士閃亮新色T-shirt（三色）</div>
+        <div class="image-wrapper">
+          <img
+            class="product-image"
+            src="cloth_img/購物戰士閃亮新色T-shirt（三色）/tw-11134207-7r992-lut2g053tdxnef.jpg"
+            alt="原圖"
+          />
+          <img
+            class="product-image-oval"
+            src="cloth_img/購物戰士閃亮新色T-shirt（三色）/tw-11134207-7r98r-lut2g05xqrcmdf.jpg"
+            alt="橢圓圖"
+          />
+        </div>
+        <div class="product-price">NT$680</div>
+        <button class="add-to-bag">加入購物車</button>
+      </div>
+    </div>
+
+    <!-- 彈窗遮罩與內容 -->
+    <div id="overlay" style="display: none" onclick="closeModal()"></div>
+    <div id="cartModal" style="display: none"></div>
+  </body>
+</html>
+
+<script>
+  const overlay = document.getElementById("overlay");
+  const cartModal = document.getElementById("cartModal");
+
+  function openModalFor(productBox) {
+    const name = productBox.dataset.name;
+    const price = productBox.dataset.price;
+    const sizeInfo = productBox.dataset.sizeInfo.replace(/\\n/g, "<br>");
+    const care = productBox.dataset.care.replace(/；/g, "<br>");
+    const notice = productBox.dataset.notice.replace(/；/g, "<br>");
+    const images = productBox.dataset.images.split(",");
+    window.currentProductBox = productBox;
+
+    const carouselSlides = images
+      .map((img) => `<img src="${img.trim()}" class="carousel-img">`)
+      .join("");
+
+    const sizeOptions = productBox.dataset.sizes
+      .split(",")
+      .map((size) => `<option value="${size}">${size}</option>`)
+      .join("");
+
+    cartModal.innerHTML = `
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+
+      <div class="carousel">
+        <div class="carousel-track">${carouselSlides}</div>
+        <button class="carousel-btn left" onclick="moveSlide(-1)">‹</button>
+        <button class="carousel-btn right" onclick="moveSlide(1)">›</button>
+      </div>
+
+      <h2>${name}</h2>
+      <p class="modal-price">價格：${price}</p>
+
+      <label for="sizeSelect">尺寸：</label>
+      <select id="sizeSelect">
+        <option>請選擇尺寸</option>
+        ${sizeOptions}
+      </select>
+      <label for="quantitySelect">數量：</label>
+      <select id="quantitySelect">
+        ${Array.from(
+          { length: 10 },
+          (_, i) => `<option value="${i + 1}">${i + 1}</option>`
+        ).join("")}
+      </select>
+
+
+      <h3>📏 尺寸資訊：</h3>
+      <div>${sizeInfo}</div>
+
+      <h3>🌼 洗滌建議：</h3>
+      <div>${care}</div>
+
+      <h3>🌸 購買須知：</h3>
+      <div>${notice}</div>
+
+      <button class="add-cart-btn" onclick="addToCart()">加入購物車</button>
+    </div>
+  `;
+
+    currentSlide = 0;
+    updateSlide();
+    overlay.style.display = "block";
+    cartModal.style.display = "block";
+  }
+
+  let currentSlide = 0;
+
+  function moveSlide(direction) {
+    const track = document.querySelector(".carousel-track");
+    const slides = document.querySelectorAll(".carousel-img");
+    const totalSlides = slides.length;
+
+    currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
+    track.style.transform = `translateX(-${currentSlide * 100}%)`;
+  }
+
+  function updateSlide() {
+    const track = document.querySelector(".carousel-track");
+    track.style.transform = `translateX(0%)`; // 重置位置
+  }
+
+  function closeModal() {
+    overlay.style.display = "none";
+    cartModal.style.display = "none";
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    // 整個商品區都可以點
+    document.querySelectorAll(".product-box").forEach((box) => {
+      box.addEventListener("click", function () {
+        openModalFor(box);
+      });
+    });
+
+    // 但「加入購物車按鈕」點了不會重複觸發父層 click
+    document.querySelectorAll(".add-to-bag").forEach((button) => {
+      button.addEventListener("click", function (event) {
+        event.stopPropagation(); // ✨ 阻止事件冒泡
+        openModalFor(this.closest(".product-box"));
+      });
+    });
+  });
+
+  function addToCart() {
+    const productBox = window.currentProductBox;
+    const name = productBox.dataset.name;
+    const price = productBox.dataset.price;
+    const image = productBox.querySelector(".product-image").src;
+    const size = document.getElementById("sizeSelect").value;
+    const quantity = parseInt(document.getElementById("quantitySelect").value);
+
+    if (size === "請選擇尺寸") {
+      alert("請選擇尺寸！");
+      return;
+    }
+
+    const item = {
+      name,
+      price,
+      size,
+      quantity,
+      image,
+    };
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart.push(item);
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    window.location.href = "cart.html";
+  }
+</script>
