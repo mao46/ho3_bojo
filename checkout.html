@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>CHECKOUT - Silhouette Stock</title>
+  <title>結帳 - Silhouette Stock</title>
   <link rel="stylesheet" href="styles.css" />
   <style>
     body {
@@ -137,7 +137,21 @@
   </style>
 </head>
 <body>
-  <header>Silhouette Stock</header>
+  <header>
+    <a href="./index.html" class="logo">
+      <img src="image/logo1.png" alt="Silhouette Stock Logo" style="height: 40px;">
+    </a>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="./index.html" class="active">SHOP</a></li>
+        <li><a href="./share.html">SHARE</a></li>
+        <li><a href="./about.html">ABOUT</a></li>
+        <li><a href="./help.html">HELP</a></li>
+        <li><a href="./cart.html">CART</a></li>
+        <li><a href="./information.html">INFORMATION</a></li>
+      </ul>
+    </nav>
+  </header>
   <div class="checkout-container">
     <div style="margin: 1rem 0;">
       <a href="cart.html" style="text-decoration: none; color: #666; font-size: 0.9rem;">← 返回購物車</a>
@@ -169,26 +183,46 @@
         </div>
 
         <h3>選擇送貨及付款方式</h3>
-        <div class="form-group">
-          <label>送貨地點</label>
-          <select>
-            <option>台灣</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>送貨方式</label>
-          <select>
-            <option>宅配寄送</option>
-            <option>超商取貨</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>付款方式</label>
-          <select>
-            <option>信用卡（Visa / Master / JCB）</option>
-            <option>LINE Pay</option>
-          </select>
-        </div>
+        <!-- 新增結帳表單區域 -->
+        <form id="checkout-form">
+          <div class="form-group">
+            <label for="name">姓名：</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">電話：</label>
+            <input type="tel" id="phone" name="phone" required>
+          </div>
+          <div class="form-group">
+            <label for="delivery-method">寄件方式：</label>
+            <select id="delivery-method" name="delivery-method" onchange="toggleDeliveryFields()" required>
+              <option value="">請選擇</option>
+              <option value="store">超商</option>
+              <option value="home">宅配</option>
+            </select>
+          </div>
+          <div id="store-fields" class="form-group" style="display:none;">
+            <label for="store-name">超商店名：</label>
+            <input type="text" id="store-name" name="store-name">
+          </div>
+          <div id="home-fields" class="form-group" style="display:none;">
+            <label for="address">宅配地址：</label>
+            <input type="text" id="address" name="address">
+          </div>
+          <div class="form-group">
+            <label>送貨地點</label>
+            <select>
+              <option>台灣</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>付款方式</label>
+            <select>
+              <option>信用卡（Visa / Master / JCB）</option>
+              <option>LINE Pay</option>
+            </select>
+          </div>
+        </form>
       </div>
 
       <div class="checkout-right">
@@ -203,8 +237,12 @@
       </div>
     </div>
   </div>
-  <footer>
-    &copy; 2025 禾山部長. All Rights Reserved.
-  </footer>
+<script>
+function toggleDeliveryFields() {
+  const method = document.getElementById('delivery-method').value;
+  document.getElementById('store-fields').style.display = method === 'store' ? 'block' : 'none';
+  document.getElementById('home-fields').style.display = method === 'home' ? 'block' : 'none';
+}
+</script>
 </body>
 </html>
