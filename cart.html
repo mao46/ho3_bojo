@@ -27,18 +27,6 @@
         min-height: 100vh; /* 確保 body 至少佔據整個視窗高度 */
       }
 
-      /* Header 樣式 */
-      header {
-        padding: 1rem 2rem;
-        text-align: center;
-        font-weight: bold;
-        flex-shrink: 0; /* 防止 header 縮小 */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: relative; /* 為了讓 logo 獨立定位 */
-      }
-
       header .logo img {
         height: 40px;
         width: auto;
@@ -417,11 +405,7 @@
             <h3>商品名稱A</h3>
             <p>單價：$100</p>
             <label
-              >數量：<input
-                type="number"
-                value="1"
-                min="1"
-                class="qty-input"
+              >數量：<input type="number" value="1" min="1" class="qty-input"
             /></label>
           </div>
           <p class="cart-item-subtotal">小計：$100</p>
@@ -479,7 +463,9 @@
                 ${colorDisplay}
                 <p>尺寸：${item.size}</p>
                 <p>單價：${item.price}</p>
-                <label>數量：<input type="number" min="1" value="${item.quantity}" data-index="${index}" class="qty-input"></label>
+                <label>數量：<input type="number" min="1" value="${
+                  item.quantity
+                }" data-index="${index}" class="qty-input"></label>
               </div>
               <p class="cart-item-subtotal">小計：NT$${subtotal.toLocaleString()}</p>
               <button class="remove-item-btn" data-index="${index}">移除</button>
@@ -494,22 +480,25 @@
           shippingFeeDisplay = "免運";
         }
 
-        document.getElementById("subtotalAmount").textContent = total.toLocaleString();
-        document.getElementById("shippingFeeText").textContent = shippingFeeDisplay;
-        document.getElementById("totalAmount").textContent = total.toLocaleString(); // 購物車頁面總計只顯示商品總額，運費在結帳頁面計算
+        document.getElementById("subtotalAmount").textContent =
+          total.toLocaleString();
+        document.getElementById("shippingFeeText").textContent =
+          shippingFeeDisplay;
+        document.getElementById("totalAmount").textContent =
+          total.toLocaleString(); // 購物車頁面總計只顯示商品總額，運費在結帳頁面計算
 
         // 如果購物車為空，隱藏結帳按鈕或禁用
         const checkoutBtn = document.querySelector(".checkout-btn");
         if (cart.length === 0) {
-            checkoutBtn.classList.add('disabled'); // 添加一個禁用樣式
-            checkoutBtn.href = "javascript:void(0);"; // 禁用連結
-            checkoutBtn.style.opacity = "0.6";
-            checkoutBtn.style.cursor = "not-allowed";
+          checkoutBtn.classList.add("disabled"); // 添加一個禁用樣式
+          checkoutBtn.href = "javascript:void(0);"; // 禁用連結
+          checkoutBtn.style.opacity = "0.6";
+          checkoutBtn.style.cursor = "not-allowed";
         } else {
-            checkoutBtn.classList.remove('disabled');
-            checkoutBtn.href = "checkout.html";
-            checkoutBtn.style.opacity = "1";
-            checkoutBtn.style.cursor = "pointer";
+          checkoutBtn.classList.remove("disabled");
+          checkoutBtn.href = "checkout.html";
+          checkoutBtn.style.opacity = "1";
+          checkoutBtn.style.cursor = "pointer";
         }
       }
 
@@ -520,7 +509,7 @@
           const cart = JSON.parse(localStorage.getItem("cart")) || [];
           let newQuantity = parseInt(e.target.value) || 1; // 確保數量至少為1
           if (newQuantity < 1) newQuantity = 1; // 避免輸入負數或0
-          
+
           cart[index].quantity = newQuantity;
           localStorage.setItem("cart", JSON.stringify(cart));
           renderCart(); // 重新渲染購物車
