@@ -1,210 +1,374 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>CHECKOUT - Silhouette Stock</title>
-  <link rel="stylesheet" href="styles.css" />
-  <style>
-    body {
-      background: #efefea;
-      font-family: "Suisse Int1", sans-serif;
-      color: #1a1a1a;
-      margin: 0;
-    }
-    header {
-      padding: 1rem 2rem;
-      text-align: center;
-      font-weight: bold;
-    }
-    .checkout-container {
-      max-width: 1080px;
-      margin: 0 auto;
-      padding: 2rem 1rem;
-    }
-    .step-indicator {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 2rem;
-      font-size: 0.95rem;
-      color: #888;
-    }
-    .step-indicator .step.active {
-      color: #000;
-      font-weight: bold;
-    }
-    .login-box {
-      text-align: right;
-      margin-bottom: 1rem;
-      font-size: 0.85rem;
-    }
-    .checkout-main {
-      display: flex;
-      gap: 2rem;
-      align-items: flex-start;
-      flex-wrap: wrap;
-    }
-    .checkout-left,
-    .checkout-right {
-      background: #fff;
-      padding: 1.5rem;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-    }
-    .checkout-left {
-      flex: 2;
-      min-width: 300px;
-    }
-    .checkout-right {
-      flex: 1;
-      min-width: 260px;
-    }
-    .product-list {
-      border-top: 1px solid #ddd;
-      margin-top: 1rem;
-    }
-    .product-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1rem 0;
-      border-bottom: 1px solid #eee;
-    }
-    .product-info {
-      flex: 1;
-      display: flex;
-      gap: 1rem;
-    }
-    .product-info img {
-      width: 64px;
-      height: 64px;
-      object-fit: cover;
-      border-radius: 8px;
-    }
-    .product-info-detail {
-      font-size: 0.9rem;
-    }
-    .product-price {
-      font-size: 0.95rem;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CHECKOUT</title>
+    <link rel="stylesheet" href="styles.css" /> 
+    <style>
+      /* 全局 HTML, body 設置，用於 Flexbox 佈局 */
+      html,
+      body {
+        height: 100%; /* 確保 html 和 body 佔據整個視窗高度 */
+        margin: 0; /* 移除 body 預設的外邊距 */
+        padding: 0; /* 移除 body 預設的內邊距 */
+        overflow-x: hidden; /* 隱藏水平滾動條，防止意外的橫向滾動 */
+      }
 
-    .form-group {
-      margin-bottom: 1rem;
-    }
-    .form-group label {
-      display: block;
-      font-size: 0.9rem;
-      margin-bottom: 0.3rem;
-    }
-    .form-group input,
-    .form-group select {
-      width: 100%;
-      padding: 0.6rem;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-    }
+      body {
+        background: #efefea;
+        font-family: "Suisse Int1", sans-serif;
+        color: #1a1a1a;
+        margin: 0;
+        display: flex; /* 啟用 Flexbox */
+        flex-direction: column; /* 子元素垂直堆疊 */
+      }
 
-    .order-summary {
-      font-size: 0.95rem;
-      line-height: 1.8;
-    }
-    .order-summary h4 {
-      margin-top: 1rem;
-    }
-    .checkout-btn {
-      display: block;
-      width: 100%;
-      background: #AEDD5B;
-      border: none;
-      padding: 0.8rem;
-      font-size: 1rem;
-      font-weight: bold;
-      margin-top: 1rem;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-    .checkout-btn:hover {
-      background: #91c850;
-    }
+      /* Header 樣式 - 包含 logo 和置中 */
+      header {
+        padding: 1rem 2rem;
+        text-align: center; /* 為 fallback */
+        font-weight: bold; /* 標題文字保持粗體 */
+        flex-shrink: 0; /* 防止 header 縮小 */
+        display: flex; /* 啟用 Flexbox */
+        justify-content: center; /* 水平居中內容 */
+        align-items: center; /* 垂直居中內容 */
+      }
 
-    footer {
-      text-align: center;
-      padding: 2rem;
-      font-size: 0.8rem;
-      color: #888;
-    }
-  </style>
-</head>
-<body>
-  <header>Silhouette Stock</header>
-  <div class="checkout-container">
-    <div style="margin: 1rem 0;">
-      <a href="cart.html" style="text-decoration: none; color: #666; font-size: 0.9rem;">← 返回購物車</a>
-    </div>
-    <div class="step-indicator">
-      <div class="step active">1 購物車</div>
-      <div class="step active">2 填寫資料</div>
-      <div class="step">3 訂單確認</div>
-    </div>
+      /* Logo 圖片樣式 */
+      header .logo img {
+        height: 40px; /* 設定 logo 圖片的高度 */
+        width: auto; /* 保持圖片比例 */
+        vertical-align: middle; /* 確保圖片與文字垂直對齊 (如果 header 中有文字) */
+        margin-top: 10px; /* 保留你原有的 logo margin-top */
+      }
 
-    <div class="login-box">
-      已經是會員？<a href="#">登入後可更方便管理訂單！</a>
-    </div>
+      /* Checkout 頁面主要容器 - 讓它彈性成長 */
+      .checkout-container {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+        flex-grow: 1; /* 讓這個區塊填滿剩餘的垂直空間 */
+        flex-shrink: 0; /* 防止內容不足時被壓縮 */
+      }
 
-    <div class="checkout-main">
-      <div class="checkout-left">
-        <h3>購物車（1件）</h3>
-        <div class="product-list">
-          <div class="product-item">
-            <div class="product-info">
-              <img src="image/image1.jpg" alt="商品圖">
-              <div class="product-info-detail">
-                <p>Professor.E - 25SS | Semi-sheer Vest (Black)</p>
-                <p>尺寸：46</p>
-              </div>
-            </div>
-            <div class="product-price">NT$2,280</div>
+      .step-indicator {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 2rem; /* 保持與下方內容的間距 */
+        font-size: 0.95rem;
+        color: #888;
+      }
+      .step-indicator .step.active {
+        color: #000;
+        font-weight: bold;
+      }
+      .login-box {
+        text-align: right;
+        margin-bottom: 2rem; /* 增加登入提示與下方內容的間距 */
+        font-size: 0.85rem;
+      }
+      .checkout-main {
+        display: flex;
+        gap: 2rem;
+        align-items: flex-start;
+        flex-wrap: wrap;
+      }
+      .checkout-left,
+      .checkout-right {
+        background: #fff;
+        padding: 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      }
+      .checkout-left {
+        flex: 2;
+        min-width: 300px;
+      }
+      .checkout-right {
+        flex: 1;
+        min-width: 260px;
+      }
+
+      /* 調整左側區塊的標題間距 */
+      .checkout-left h3 {
+        font-size: 1.2rem;
+        margin-top: 0; /* 確保頂部沒有額外間距 */
+        margin-bottom: 1.5rem; /* 統一標題下方的間距 */
+        font-weight: bold; /* 確保標題是粗體 */
+      }
+
+      .product-list {
+        border-top: 1px solid #ddd;
+        margin-top: 1.5rem; /* 調整商品列表與上方標題的間距 */
+        margin-bottom: 2.5rem; /* 增加商品列表與下方「選擇送貨及付款方式」標題的間距 */
+      }
+      .product-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 0; /* 增加商品項目上下內邊距 */
+        border-bottom: 1px solid #eee;
+      }
+      .product-item:last-child {
+        border-bottom: none; /* 最後一個商品項目移除底線 */
+      }
+      .product-info {
+        flex: 1;
+        display: flex;
+        gap: 1rem;
+      }
+      .product-info img {
+        width: 64px;
+        height: 64px;
+        object-fit: cover;
+        border-radius: 8px;
+      }
+      .product-info-detail {
+        font-size: 0.9rem;
+        line-height: 1.6; /* 增加商品詳細資訊的行高 */
+      }
+      .product-info-detail p {
+        margin: 0.2rem 0; /* 調整商品詳細資訊段落的上下外邊距 */
+        font-weight: normal; /* **最關鍵：確保商品詳細資訊的文字都是非粗體** */
+      }
+      .product-price {
+        font-size: 0.95rem;
+      }
+
+      /* 表單群組和輸入框的間距調整 */
+      .form-group {
+        margin-bottom: 1.5rem; /* 統一表單群組之間的間距 */
+      }
+      .form-group label {
+        display: block;
+        font-size: 0.9rem;
+        margin-bottom: 0.6rem; /* 增加 label 與輸入框的間距 */
+        font-weight: bold; /* 讓 label 更清晰 */
+      }
+      .form-group input,
+      .form-group select {
+        width: 100%;
+        padding: 0.8rem; /* 增加輸入框和選擇框的內邊距 */
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        font-size: 1rem; /* 讓文字在輸入框內看起來更大 */
+      }
+
+      /* 訂單摘要 (右側) 的間距調整 */
+      .order-summary {
+        font-size: 0.95rem;
+        line-height: 1.8; /* **調整為更均勻的行高** */
+      }
+      .order-summary h3 {
+        font-size: 1.2rem;
+        margin-top: 0; /* 確保標題頂部沒有多餘間距 */
+        margin-bottom: 1rem; /* **關鍵調整：訂單資訊標題下方的間距，稍微縮小讓它更靠近小計** */
+        font-weight: bold; /* 確保標題是粗體 */
+      }
+      .order-summary p {
+        margin-bottom: 0.8rem; /* 統一每個訂單項目的間距 */
+        font-weight: normal; /* 確保小計、運費文字是非粗體 */
+      }
+      .order-summary p:first-of-type {
+        margin-top: 0.5rem; /* **關鍵調整：小計與標題之間的間距，讓它更緊湊** */
+      }
+      .order-summary p:last-of-type {
+        margin-bottom: 1.5rem; /* 調整最後一個 P 標籤（優惠代碼）下方的間距 */
+      }
+      .order-summary h4 {
+        margin-top: 1.5rem; /* 增加合計上方的間距 */
+        margin-bottom: 1.5rem; /* 增加合計下方的間距 */
+        font-size: 1.1rem; /* 讓合計更突出 */
+        padding-top: 1rem; /* 在合計上方添加一些內邊距，與優惠代碼區隔開 */
+        border-top: 1px solid #eee; /* 在合計上方添加一條細線 */
+        font-weight: bold; /* 合計保持粗體 */
+      }
+      .checkout-btn {
+        display: block;
+        width: 100%;
+        background: #aedd5b;
+        border: none;
+        padding: 0.8rem;
+        font-size: 1rem;
+        font-weight: bold;
+        margin-top: 1rem;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+      .checkout-btn:hover {
+        background: #91c850;
+      }
+
+      /* Footer 樣式 - 黏在底部 */
+      footer {
+        text-align: center;
+        padding: 2rem;
+        font-size: 0.8rem;
+        color: #888;
+        flex-shrink: 0; /* 防止 footer 縮小 */
+        position: relative; /* 確保 footer 處於文檔流中 */
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a href="./index.html" class="logo">
+        <img
+          src="image/logo1.png"
+          alt="Silhouette Stock Logo"
+          style="height: 40px; margin-top: 10px"
+        />
+      </a>
+    </header>
+    <div class="checkout-container">
+      <div style="margin: 1rem 0">
+        <a
+          href="cart.html"
+          style="text-decoration: none; color: #666; font-size: 0.9rem"
+          >← 返回購物車</a
+        >
+      </div>
+      <div class="step-indicator">
+        <div class="step active">1 購物車</div>
+        <div class="step active">2 填寫資料</div>
+        <div class="step">3 訂單確認</div>
+      </div>
+
+      <div class="login-box">
+        已經是會員？<a href="#">登入後可更方便管理訂單！</a>
+      </div>
+
+      <div class="checkout-main">
+        <div class="checkout-left">
+          <h3 id="cartItemCount">購物車（0件）</h3>
+          <div class="product-list" id="checkoutProductList"></div>
+
+          <h3>選擇送貨及付款方式</h3>
+          <div class="form-group">
+            <label>送貨地點</label>
+            <select>
+              <option>台灣</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>送貨方式</label>
+            <select id="shippingMethodSelect">
+              <option value="宅配寄送">宅配寄送</option>
+              <option value="超商取貨">超商取貨</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>付款方式</label>
+            <select>
+              <option>信用卡（Visa / Master / JCB）</option>
+              <option>LINE Pay</option>
+            </select>
           </div>
         </div>
 
-        <h3>選擇送貨及付款方式</h3>
-        <div class="form-group">
-          <label>送貨地點</label>
-          <select>
-            <option>台灣</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>送貨方式</label>
-          <select>
-            <option>宅配寄送</option>
-            <option>超商取貨</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>付款方式</label>
-          <select>
-            <option>信用卡（Visa / Master / JCB）</option>
-            <option>LINE Pay</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="checkout-right">
-        <h3>訂單資訊</h3>
-        <div class="order-summary">
-          <p>小計：NT$2,280</p>
-          <p>運費：NT$95</p>
-          <p><a href="#">使用優惠代碼</a></p>
-          <h4>合計：NT$2,375</h4>
-          <button class="checkout-btn">前往結帳</button>
+        <div class="checkout-right">
+          <h3>訂單資訊</h3>
+          <div class="order-summary">
+            <p>小計：NT$<span id="summarySubtotal">0</span></p>
+            <p>運費：NT$<span id="summaryShippingFee">0</span></p>
+            <p><a href="#">使用優惠代碼</a></p>
+            <h4>合計：NT$<span id="summaryTotal">0</span></h4>
+            <button class="checkout-btn">前往結帳</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <footer>
-    &copy; 2025 禾山部長. All Rights Reserved.
-  </footer>
-</body>
+    <footer>&copy; 2025 禾山部長. All Rights Reserved.</footer>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const checkoutProductList = document.getElementById(
+          "checkoutProductList"
+        );
+        const cartItemCount = document.getElementById("cartItemCount");
+        const summarySubtotal = document.getElementById("summarySubtotal");
+        const summaryShippingFee =
+          document.getElementById("summaryShippingFee");
+        const summaryTotal = document.getElementById("summaryTotal");
+        const shippingMethodSelect = document.getElementById(
+          "shippingMethodSelect"
+        );
+
+        let subtotal = 0; // 商品總額
+        const freeShippingThreshold = 2000; // 免運門檻
+        const shippingFeeStore = 60; // 超商取貨運費
+        const shippingFeeHomeDelivery = 120; // 宅配運費
+        let currentShippingFee = 0; // 當前運費
+
+        // 函數：更新訂單摘要
+        function updateOrderSummary() {
+          // 根據選定的送貨方式計算運費
+          const selectedMethod = shippingMethodSelect.value;
+          if (subtotal >= freeShippingThreshold) {
+            currentShippingFee = 0; // 免運
+          } else {
+            if (selectedMethod === "超商取貨") {
+              currentShippingFee = shippingFeeStore; // 超商運費
+            } else {
+              currentShippingFee = shippingFeeHomeDelivery; // 宅配運費
+            }
+          }
+
+          const totalAmount = subtotal + currentShippingFee;
+
+          summarySubtotal.textContent = subtotal.toLocaleString();
+          summaryShippingFee.textContent =
+            currentShippingFee === 0
+              ? "0 (免運)"
+              : currentShippingFee.toLocaleString();
+          summaryTotal.textContent = totalAmount.toLocaleString();
+        }
+
+        // 清空現有列表
+        checkoutProductList.innerHTML = "";
+
+        // 渲染購物車商品到結帳頁面
+        if (cart.length === 0) {
+          checkoutProductList.innerHTML =
+            '<p style="text-align: center; padding: 20px;">購物車是空的，請返回購物頁面添加商品。</p>';
+          cartItemCount.textContent = "購物車（0件）";
+        } else {
+          cartItemCount.textContent = `購物車（${cart.length}件）`; // 更新商品數量
+          cart.forEach((item) => {
+            const itemPrice =
+              parseInt(item.price.replace(/[^\d]/g, "")) * item.quantity;
+            subtotal += itemPrice; // 累加商品總額
+
+            const productItem = document.createElement("div");
+            productItem.classList.add("product-item");
+
+            // 處理顏色顯示，如果存在
+            const colorDetail = item.color ? `<p>顏色：${item.color}</p>` : "";
+
+            productItem.innerHTML = `
+              <div class="product-info">
+                <img src="${item.image}" alt="${item.name}圖">
+                <div class="product-info-detail">
+                  <p>${item.name}</p>
+                  ${colorDetail}
+                  <p>尺寸：${item.size}</p>
+                  <p>數量：${item.quantity}</p>
+                </div>
+              </div>
+              <div class="product-price">NT$${itemPrice.toLocaleString()}</div>
+            `;
+            checkoutProductList.appendChild(productItem);
+          });
+        }
+
+        // 初始載入時更新訂單摘要
+        updateOrderSummary();
+
+        // 監聽送貨方式的變化，重新計算運費
+        shippingMethodSelect.addEventListener("change", updateOrderSummary);
+      });
+    </script>
+  </body>
 </html>

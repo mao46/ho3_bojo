@@ -903,27 +903,77 @@
     let initialFilterValue = "all"; // 預設所有商品
 
     if (path.includes("top.html")) {
-      document.querySelector("input[name='style'][value='top']").checked = true;
+      // 在 top.html 頁面，預設勾選相關的「類別」核取方塊
+      const tshirtCheckbox = document.querySelector(
+        "input[name='category'][value='tshirt']"
+      );
+      if (tshirtCheckbox) {
+        tshirtCheckbox.checked = true;
+      } else {
+        console.warn("在 top.html 中找不到 'T-shirt' 類別的核取方塊。");
+      }
+
+      const shirtCheckbox = document.querySelector(
+        "input[name='category'][value='shirt']"
+      );
+      if (shirtCheckbox) {
+        shirtCheckbox.checked = true;
+      } else {
+        console.warn("在 top.html 中找不到 '襯衫' 類別的核取方塊。");
+      }
+
+      const blouseCheckbox = document.querySelector(
+        "input[name='category'][value='blouse']"
+      );
+      if (blouseCheckbox) {
+        blouseCheckbox.checked = true;
+      } else {
+        console.warn("在 top.html 中找不到 '罩衫/上衣' 類別的核取方塊。");
+      }
+
       initialFilterValue = "custom"; // 表示非 'all' 的自定義篩選
     } else if (path.includes("bottom.html")) {
-      document.querySelector(
-        "input[name='style'][value='bottom']"
-      ).checked = true;
+      // 假設 bottom.html 有對應的 category 值，例如 'pants' 或 'skirt'
+      // 您需要根據 bottom.html 中實際存在的篩選器來調整這裡
+      // 例如：
+      const bottomStyleCheckbox = document.querySelector(
+        "input[name='category'][value='pants']"
+      ); // 假設下身是 category=pants
+      if (bottomStyleCheckbox) {
+        bottomStyleCheckbox.checked = true;
+      } else {
+        console.warn("在 bottom.html 中找不到對應的下身類別核取方塊。");
+      }
       initialFilterValue = "custom";
     } else if (path.includes("outer.html")) {
-      document.querySelector(
-        "input[name='style'][value='outerwear']"
-      ).checked = true;
+      const outerwearCheckbox = document.querySelector(
+        "input[name='category'][value='jacket']"
+      ); // 根據您的 HTML, '立領簡單防曬外套' 的 category 是 'jacket'
+      if (outerwearCheckbox) {
+        outerwearCheckbox.checked = true;
+      } else {
+        console.warn("在 outer.html 中找不到 '外套' 類別的核取方塊。");
+      }
       initialFilterValue = "custom";
     } else if (path.includes("dress.html")) {
-      // 洋裝可以同時勾選 style 和 category，看您的偏好
-      document.querySelector(
+      const dressCategoryCheckbox = document.querySelector(
         "input[name='category'][value='dress']"
-      ).checked = true;
+      );
+      if (dressCategoryCheckbox) {
+        dressCategoryCheckbox.checked = true;
+      } else {
+        console.warn("在 dress.html 中找不到 '洋裝' 類別的核取方塊。");
+      }
       initialFilterValue = "custom";
     } else if (path.includes("acc.html")) {
-      // 如果有配件的 data 屬性，這裡可以勾選
-      // document.querySelector("input[name='category'][value='accessories']").checked = true;
+      // 如果 acc.html 中有對應配件的 category 值，請在這裡勾選
+      // 範例：
+      // const accessoriesCheckbox = document.querySelector("input[name='category'][value='accessories']");
+      // if (accessoriesCheckbox) {
+      //   accessoriesCheckbox.checked = true;
+      // } else {
+      //   console.warn("在 acc.html 中找不到 '配件' 類別的核取方塊。");
+      // }
       initialFilterValue = "custom";
     }
 
@@ -1160,8 +1210,8 @@
   document.addEventListener("DOMContentLoaded", function () {
     const productBoxes = document.querySelectorAll(".product-box");
     const container = document.querySelector(".container"); // 獲取商品容器
-    let targetStyle = "top"; // 用於 'top', 'bottom', 'outer'
-    let targetCategory = ""; // 用於 'dress' (或更精確的分類)
+    let targetStyle = ""; // 用於 'top', 'bottom', 'outer'
+    let targetCategory = "dress"; // 用於 'dress' (或更精確的分類)
     let visibleProductCount = 0; // 新增變數來計數顯示的商品
 
     // 根據當前頁面 URL 判斷篩選條件
@@ -1178,7 +1228,9 @@
     } else if (path.includes("acc.html")) {
       // 根據您提供的 allproduct.html，目前沒有明確的 'acc' (配件) 分類
       // 如果未來有，您可以添加類似 targetCategory = "accessories";
-      console.log("目前 'acc.html' 頁面在 allproduct.html 中沒有找到明確的分類商品。");
+      console.log(
+        "目前 'acc.html' 頁面在 allproduct.html 中沒有找到明確的分類商品。"
+      );
       // 在此頁面，我們依然會讓下面的循環運行，以便統一處理 '無商品' 的邏輯
     }
 
@@ -1193,7 +1245,8 @@
         shouldDisplay = productStyle === targetStyle;
       } else if (targetCategory) {
         // 如果設定了 category 篩選條件
-        shouldDisplay = productCategory === targetCategory || productStyle === "onepiece"; // dress 頁面也包含 onepiece style
+        shouldDisplay =
+          productCategory === targetCategory || productStyle === "onepiece"; // dress 頁面也包含 onepiece style
       } else if (path.includes("acc.html")) {
         // 特殊處理 'acc.html' 頁面，如果沒有明確的 'acc' 分類商品，則不顯示任何商品
         shouldDisplay = false;

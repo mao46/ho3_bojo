@@ -2,276 +2,543 @@
 <html lang="zh-TW">
   <head>
     <meta charset="UTF-8" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <title>CART - Silhouette Stock</title>
-    <!-- 統一品牌名稱 -->
-
+    <title>CART</title>
     <link rel="stylesheet" href="styles.css" />
-
     <link rel="stylesheet" href="animations.css" />
-    <!-- 添加 animations.css -->
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <!-- 更新 GSAP 版本 -->
+    <style>
+      /* 全局 HTML, body 設置 */
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden; /* 隱藏水平滾動條 */
+      }
 
-    <!-- 其他可能的JS庫 -->
+      body {
+        background: #efefea;
+        font-family: "Suisse Int1", sans-serif;
+        color: #1a1a1a;
+        margin: 0;
+        display: flex; /* 啟用 Flexbox */
+        flex-direction: column; /* 子元素垂直堆疊 */
+        min-height: 100vh; /* 確保 body 至少佔據整個視窗高度 */
+      }
+
+      /* Header 樣式 */
+      header {
+        padding: 1rem 2rem;
+        text-align: center;
+        font-weight: bold;
+        flex-shrink: 0; /* 防止 header 縮小 */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative; /* 為了讓 logo 獨立定位 */
+      }
+
+      header .logo img {
+        height: 40px;
+        width: auto;
+        vertical-align: middle;
+      }
+
+      nav {
+        margin-left: auto; /* 將導航推到右邊 */
+      }
+
+      .nav-links {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        gap: 20px;
+      }
+
+      .nav-links li a {
+        text-decoration: none;
+        color: #1a1a1a;
+        font-weight: bold;
+      }
+
+      .nav-links .has-dropdown {
+        position: relative;
+      }
+
+      .dropdown {
+        display: none;
+        position: absolute;
+        background-color: #fff;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+        min-width: 120px;
+        left: 0;
+        padding: 10px 0;
+        border-radius: 8px;
+      }
+
+      .has-dropdown:hover .dropdown {
+        display: block;
+      }
+
+      .dropdown li a {
+        color: #1a1a1a;
+        padding: 8px 15px;
+        text-decoration: none;
+        display: block;
+        text-align: left;
+        font-weight: normal;
+      }
+
+      .dropdown li a:hover {
+        background-color: #f1f1f1;
+      }
+
+      /* Main Content 樣式 */
+      .cart-page-content {
+        flex-grow: 1; /* 讓主要內容區域彈性成長 */
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+        font-family: "Suisse Int1", sans-serif;
+        color: #1a1a1a;
+      }
+
+      .cart-page-content h1 {
+        margin-top: 0;
+        margin-bottom: 2rem;
+        font-size: 2.2rem;
+        text-align: center;
+        color: #1a1a1a;
+      }
+
+      .cart-items {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .cart-item {
+        display: flex;
+        align-items: center; /* 垂直居中 */
+        justify-content: space-between;
+        background: linear-gradient(to bottom right, #ffffff, #f7f8f5);
+        padding: 1.5rem;
+        border-radius: 16px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+        border: 1px solid #e1e1e1;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .cart-item:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+      }
+
+      .cart-item-image {
+        width: 80px;
+        height: 80px;
+        border-radius: 8px;
+        object-fit: cover;
+        flex-shrink: 0; /* 防止圖片縮小 */
+        margin-right: 1.2rem;
+      }
+
+      .cart-item-details {
+        flex: 1; /* 讓細節區塊佔據大部分可用空間 */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+      .cart-item-details h3 {
+        font-size: 1.1rem;
+        font-weight: bold;
+        margin: 0;
+      }
+      .cart-item-details p {
+        font-size: 0.95rem;
+        margin: 0;
+        color: #666;
+      }
+
+      /* 數量輸入框的固定寬度 */
+      .cart-item-details input[type="number"] {
+        width: 70px; /* **固定寬度** */
+        max-width: 70px;
+        min-width: 70px;
+        padding: 0.4rem;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        text-align: center; /* 讓數字居中 */
+      }
+
+      /* **小計的固定寬度：這才是解決您問題的關鍵！** */
+      .cart-item-subtotal {
+        font-size: 1rem;
+        font-weight: bold;
+        color: #333;
+        white-space: nowrap; /* 防止文字換行 */
+        text-align: right;
+        padding-left: 1rem;
+        flex-shrink: 0; /* 防止它縮小 */
+        /* 以下是新增的關鍵屬性 */
+        min-width: 90px; /* **設定一個足夠容納四位數+NT$的最小寬度** */
+        /* 您可能需要根據實際字體和最大預期金額來微調這個值，例如 NT$9,999 的寬度 */
+        /* 對於 NT$1,000 以上，90px 應該足夠 */
+      }
+
+      .remove-item-btn {
+        margin-left: 1rem;
+        background: transparent;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 0.4rem 0.8rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        flex-shrink: 0; /* 防止按鈕縮小 */
+      }
+      .remove-item-btn:hover {
+        background: #fdd;
+        border-color: #f46c6c;
+      }
+
+      /* 購物車總結 */
+      .cart-summary {
+        margin-top: 2rem;
+        background: #f5f5f0;
+        padding: 1.5rem;
+        border-radius: 12px;
+        border-left: 4px solid #aedd5b;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        line-height: 1.5;
+        word-break: break-word;
+      }
+
+      .cart-summary h3 {
+        font-size: 1.2rem;
+        margin-bottom: 0.8rem;
+        color: #333;
+      }
+
+      .cart-summary p {
+        font-size: 1rem;
+        margin: 0.3rem 0;
+        color: #555;
+      }
+
+      .cart-summary .shipping-info {
+        font-size: 0.85rem;
+        color: #888;
+        margin-top: -0.3rem; /* 稍微向上調整，讓小字更貼近運費行 */
+      }
+
+      .cart-summary h4 {
+        font-size: 1.3rem;
+        margin-top: 1rem;
+        margin-bottom: 1.5rem;
+        color: #1a1a1a;
+        font-weight: bold;
+      }
+
+      .checkout-btn {
+        margin-top: 1rem;
+        background: #aedd5b;
+        color: #000;
+        border: none;
+        padding: 0.8rem 1.5rem;
+        font-size: 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+        text-align: center;
+        display: inline-block;
+        width: auto;
+      }
+      .checkout-btn:hover {
+        background: #98c94f;
+      }
+
+      /* Footer 樣式 */
+      footer {
+        text-align: center;
+        padding: 2rem;
+        font-size: 0.8rem;
+        color: #888;
+        flex-shrink: 0; /* 防止 footer 縮小 */
+        margin-top: auto; /* 將 footer 推到底部 */
+        position: relative; /* 確保它在文檔流中 */
+      }
+
+      /* RWD 響應式調整 */
+      @media (max-width: 768px) {
+        header {
+          flex-direction: column;
+          padding: 1rem;
+        }
+
+        header .logo {
+          margin-bottom: 10px;
+        }
+
+        nav {
+          margin-left: 0;
+          width: 100%;
+        }
+
+        .nav-links {
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 10px;
+        }
+
+        .nav-links li {
+          margin: 5px 0;
+        }
+
+        .cart-page-content {
+          padding: 1rem;
+        }
+
+        .cart-item {
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          padding: 1rem;
+        }
+        .cart-item-image {
+          margin-right: 0;
+          margin-bottom: 1rem;
+        }
+        .cart-item-details {
+          align-items: center;
+          margin-left: 0;
+          width: 100%;
+        }
+        .cart-item-subtotal {
+          margin-top: 1rem;
+          padding-left: 0;
+          text-align: center;
+          /* 在手機視圖下，小計的寬度也需要調整，以適應較窄的空間 */
+          min-width: 80px; /* 根據手機字體大小微調 */
+        }
+        .remove-item-btn {
+          margin-left: 0;
+          margin-top: 1rem;
+          width: 80%;
+        }
+        .cart-summary {
+          padding: 1rem;
+        }
+      }
+
+      /* 更小的螢幕 (例如 iPhone SE 寬度) */
+      @media (max-width: 480px) {
+        .cart-page-content h1 {
+          font-size: 1.8rem;
+        }
+        .cart-item-image {
+          width: 60px;
+          height: 60px;
+        }
+        .cart-item-details h3 {
+          font-size: 1rem;
+        }
+        .cart-item-details p {
+          font-size: 0.85rem;
+        }
+        .cart-item-details input[type="number"] {
+          width: 60px;
+          max-width: 60px;
+          min-width: 60px;
+        }
+        .cart-item-subtotal {
+          font-size: 0.9rem;
+          min-width: 75px; /* 更小的螢幕，可以稍微縮小 */
+        }
+        .remove-item-btn {
+          padding: 0.3rem 0.6rem;
+          font-size: 0.9rem;
+        }
+        .cart-summary h3 {
+          font-size: 1.1rem;
+        }
+        .cart-summary p {
+          font-size: 0.9rem;
+        }
+        .cart-summary h4 {
+          font-size: 1.2rem;
+        }
+        .checkout-btn {
+          padding: 0.7rem 1.2rem;
+          font-size: 15px;
+        }
+      }
+    </style>
   </head>
   <body>
     <header>
       <a href="./index.html" class="logo">
         <img src="image/logo1.png" alt="禾山部長 Logo" style="height: 40px" />
       </a>
-
       <nav>
-      <ul class="nav-links">
-        <li><a href="./index.html">HOME</a></li>
-        <li class="has-dropdown">
-          <a href="./allproduct.html">SHOP</a>
-          <ul class="dropdown">
-            <li><a href="./allproduct.html">ALL</a></li>
-            <li><a href="./top.html">TOP</a></li>
-            <li><a href="./bottom.html">BOTTOM</a></li>
-            <li><a href="./dress.html">DRESS</a></li>
-            <li><a href="./outer.html">OUTER</a></li>
-            <li><a href="./acc.html">ACC</a></li>
-          </ul>
-        </li>
-        <li><a href="./share.html">SHARE</a></li>
-        <li><a href="./about.html">ABOUT</a></li>
-        <li><a href="./help.html">HELP</a></li>
-        <li><a href="./cart.html">CART</a></li>
-      </ul>
-    </nav>
-    </h
-    r>
+        <ul class="nav-links">
+          <li><a href="./index.html">HOME</a></li>
+          <li class="has-dropdown">
+            <a href="./allproduct.html">SHOP</a>
+            <ul class="dropdown">
+              <li><a href="./allproduct.html">ALL</a></li>
+              <li><a href="./top.html">TOP</a></li>
+              <li><a href="./bottom.html">BOTTOM</a></li>
+              <li><a href="./dress.html">DRESS</a></li>
+              <li><a href="./outer.html">OUTER</a></li>
+              <li><a href="./acc.html">ACC</a></li>
+            </ul>
+          </li>
+          <li><a href="./share.html">SHARE</a></li>
+          <li><a href="./about.html">ABOUT</a></li>
+          <li><a href="./help.html">HELP</a></li>
+          <li><a href="./cart.html">CART</a></li>
+        </ul>
+      </nav>
+    </header>
 
     <main class="cart-page-content">
       <h1>🛒 您的購物車</h1>
 
-      <!-- 購物車內容將會顯示在這裡 -->
-
-      <!-- 例如：商品列表、數量調整、總計金額、結帳按鈕等 -->
-
       <div class="cart-items">
-        <!-- 範例商品 -->
-
-        <div class="cart-item">
+        <div class="cart-item" style="display: none">
           <img src="image/image1.jpg" alt="商品圖片" class="cart-item-image" />
-
           <div class="cart-item-details">
             <h3>商品名稱A</h3>
-
             <p>單價：$100</p>
-            <input type="number" value="1" min="1" />
+            <label
+              >數量：<input
+                type="number"
+                value="1"
+                min="1"
+                class="qty-input"
+            /></label>
           </div>
-
           <p class="cart-item-subtotal">小計：$100</p>
           <button class="remove-item-btn">移除</button>
         </div>
-
-        <!-- 更多商品 -->
       </div>
 
       <div class="cart-summary">
         <h3>訂單總計</h3>
-
-        <p>商品總額：$XXX</p>
-
-        <p>運費：$YY</p>
-
-        <h4>總計：$ZZZ</h4>
-        <br />
+        <p>商品總額：NT$<span id="subtotalAmount">0</span></p>
+        <p>運費：<span id="shippingFeeText">結帳畫面為準</span></p>
+        <p class="shipping-info">
+          <small>滿 NT$2000 免運，運費以結帳畫面為準。</small>
+        </p>
+        <h4>總計：NT$<span id="totalAmount">0</span></h4>
         <a href="checkout.html" class="checkout-btn">前往結帳</a>
       </div>
     </main>
 
     <footer>
       <p>&copy; 2025 Ho3 Bojo. All rights reserved.</p>
-
       <p>聯絡我們: 部長信箱@example.com</p>
     </footer>
 
     <script src="script.js"></script>
 
-    <!-- 如果有針對此頁面的特定JS -->
-  </body>
+    <script>
+      function renderCart() {
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const container = document.querySelector(".cart-items");
+        const summary = document.querySelector(".cart-summary");
 
-  <script>
-    function renderCart() {
-      const cart = JSON.parse(localStorage.getItem("cart")) || [];
-      const container = document.querySelector(".cart-items");
-      const summary = document.querySelector(".cart-summary");
+        container.innerHTML = ""; // 清空現有內容
 
-      container.innerHTML = "";
+        let total = 0;
+        const freeShippingThreshold = 2000; // 免運門檻
 
-      let total = 0;
+        if (cart.length === 0) {
+          container.innerHTML =
+            '<p style="text-align: center; padding: 20px; color: #666;">您的購物車是空的，請前往選購商品。</p>';
+        } else {
+          cart.forEach((item, index) => {
+            const price = parseInt(item.price.replace(/[^\d]/g, ""));
+            const subtotal = price * item.quantity;
+            total += subtotal;
 
-      cart.forEach((item, index) => {
-        const price = parseInt(item.price.replace(/[^\d]/g, ""));
-        const subtotal = price * item.quantity;
-        total += subtotal;
+            const el = document.createElement("div");
+            el.className = "cart-item";
+            const colorDisplay = item.color ? `<p>顏色：${item.color}</p>` : "";
 
-        const el = document.createElement("div");
-        el.className = "cart-item"; // 新增顏色顯示
-        const colorDisplay = item.color ? `<p>顏色：${item.color}</p>` : "";
-        el.innerHTML = `
-      <img src="${item.image}" class="cart-item-image">
-      <div class="cart-item-details">
-        <h3>${item.name}</h3>
-        ${colorDisplay} <!-- 插入顏色資訊 -->
-        <p>尺寸：${item.size}</p>
-        <p>單價：${item.price}</p>
-        <label>數量：<input type="number" min="1" value="${item.quantity}" data-index="${index}" class="qty-input"></label>
-      </div>
-      <p class="cart-item-subtotal">小計：NT$${subtotal}</p>
-      <button class="remove-item-btn" data-index="${index}">移除</button>
-    `;
-        container.appendChild(el);
+            el.innerHTML = `
+              <img src="${item.image}" class="cart-item-image">
+              <div class="cart-item-details">
+                <h3>${item.name}</h3>
+                ${colorDisplay}
+                <p>尺寸：${item.size}</p>
+                <p>單價：${item.price}</p>
+                <label>數量：<input type="number" min="1" value="${item.quantity}" data-index="${index}" class="qty-input"></label>
+              </div>
+              <p class="cart-item-subtotal">小計：NT$${subtotal.toLocaleString()}</p>
+              <button class="remove-item-btn" data-index="${index}">移除</button>
+            `;
+            container.appendChild(el);
+          });
+        }
+
+        // 更新購物車總結
+        let shippingFeeDisplay = "結帳畫面為準";
+        if (total >= freeShippingThreshold) {
+          shippingFeeDisplay = "免運";
+        }
+
+        document.getElementById("subtotalAmount").textContent = total.toLocaleString();
+        document.getElementById("shippingFeeText").textContent = shippingFeeDisplay;
+        document.getElementById("totalAmount").textContent = total.toLocaleString(); // 購物車頁面總計只顯示商品總額，運費在結帳頁面計算
+
+        // 如果購物車為空，隱藏結帳按鈕或禁用
+        const checkoutBtn = document.querySelector(".checkout-btn");
+        if (cart.length === 0) {
+            checkoutBtn.classList.add('disabled'); // 添加一個禁用樣式
+            checkoutBtn.href = "javascript:void(0);"; // 禁用連結
+            checkoutBtn.style.opacity = "0.6";
+            checkoutBtn.style.cursor = "not-allowed";
+        } else {
+            checkoutBtn.classList.remove('disabled');
+            checkoutBtn.href = "checkout.html";
+            checkoutBtn.style.opacity = "1";
+            checkoutBtn.style.cursor = "pointer";
+        }
+      }
+
+      // 數量調整與刪除事件監聽
+      document.addEventListener("input", function (e) {
+        if (e.target.classList.contains("qty-input")) {
+          const index = e.target.dataset.index;
+          const cart = JSON.parse(localStorage.getItem("cart")) || [];
+          let newQuantity = parseInt(e.target.value) || 1; // 確保數量至少為1
+          if (newQuantity < 1) newQuantity = 1; // 避免輸入負數或0
+          
+          cart[index].quantity = newQuantity;
+          localStorage.setItem("cart", JSON.stringify(cart));
+          renderCart(); // 重新渲染購物車
+        }
       });
 
-      summary.innerHTML = `
-    <h3>訂單總計</h3>
-    <p>商品總額：NT$${total}</p>
-    <p>運費：NT$0</p>
-    <h4>總計：NT$${total}</h4>
-    <a href="checkout.html" class="checkout-btn">前往結帳</a>
-  `;
-    }
+      document.addEventListener("click", function (e) {
+        if (e.target.classList.contains("remove-item-btn")) {
+          const index = e.target.dataset.index;
+          const cart = JSON.parse(localStorage.getItem("cart")) || [];
+          cart.splice(index, 1); // 移除商品
+          localStorage.setItem("cart", JSON.stringify(cart));
+          renderCart(); // 重新渲染購物車
+        }
+      });
 
-    // 數量調整與刪除
-    document.addEventListener("input", function (e) {
-      if (e.target.classList.contains("qty-input")) {
-        const index = e.target.dataset.index;
-        const cart = JSON.parse(localStorage.getItem("cart")) || [];
-        cart[index].quantity = parseInt(e.target.value) || 1;
-        localStorage.setItem("cart", JSON.stringify(cart));
-        renderCart();
-      }
-    });
-
-    document.addEventListener("click", function (e) {
-      if (e.target.classList.contains("remove-item-btn")) {
-        const index = e.target.dataset.index;
-        const cart = JSON.parse(localStorage.getItem("cart")) || [];
-        cart.splice(index, 1);
-        localStorage.setItem("cart", JSON.stringify(cart));
-        renderCart();
-      }
-    });
-
-    document.addEventListener("DOMContentLoaded", renderCart);
-  </script>
+      // 頁面載入時渲染購物車
+      document.addEventListener("DOMContentLoaded", renderCart);
+    </script>
+  </body>
 </html>
-
-<style>
-  .cart-page-content {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 2rem 1rem;
-    font-family: "Suisse Int1", sans-serif;
-    color: #1a1a1a;
-  }
-
-  .cart-items {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
-  .cart-item {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    background: linear-gradient(to bottom right, #ffffff, #f7f8f5);
-    padding: 1.5rem;
-    border-radius: 16px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
-    border: 1px solid #e1e1e1;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  .cart-item:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
-  }
-
-  .cart-item-image {
-    width: 80px;
-    height: 80px;
-    border-radius: 8px;
-    object-fit: cover;
-  }
-
-  .cart-item-details {
-    flex: 1;
-    margin-left: 1.2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  .cart-item-details h3 {
-    font-size: 1.1rem;
-    font-weight: bold;
-    margin: 0;
-  }
-  .cart-item-details p {
-    font-size: 0.95rem;
-    margin: 0;
-    color: #666;
-  }
-  .cart-item-details input[type="number"] {
-    width: 60px;
-    padding: 0.4rem;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-  }
-
-  .cart-item-subtotal,
-  .remove-item-btn {
-    margin-left: 1rem;
-    font-size: 14px;
-  }
-
-  .cart-item-subtotal {
-    font-weight: bold;
-    color: #333;
-  }
-
-  .remove-item-btn {
-    background: transparent;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 0.4rem 0.8rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-  .remove-item-btn:hover {
-    background: #fdd;
-    border-color: #f46c6c;
-  }
-
-  .cart-summary {
-    margin-top: 2rem;
-    background: #f5f5f0;
-    padding: 1.5rem;
-    border-radius: 12px;
-    border-left: 4px solid #aedd5b;
-  }
-
-  .checkout-btn {
-    margin-top: 1rem;
-    background: #aedd5b;
-    color: #000;
-    border: none;
-    padding: 0.8rem 1.5rem;
-    font-size: 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-  }
-  .checkout-btn:hover {
-    background: #98c94f;
-  }
-</style>
