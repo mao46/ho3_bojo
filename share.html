@@ -1,18 +1,76 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SHARE - Silhouette Stock</title>
+    <title>風格分享 - Silhouette Stock</title>
     <link rel="stylesheet" href="./styles.css">
-    <link rel="stylesheet" href="./animations.css"> <!-- 新增的 CSS 文件 -->
+    <link rel="stylesheet" href="./animations.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    
+    <style>
+        .popup-item {
+            position: relative; 
+            align-items: flex-start;
+            display: flex;
+            width: 100%;
+            padding-right: 30px; 
+            box-sizing: border-box; 
+        }
+        .remove-item-btn {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            font-weight: bold;
+            color: #888;
+            cursor: pointer;
+            padding: 0;
+            line-height: 1;
+        }
+        .remove-item-btn:hover {
+            color: #000;
+        }
+    </style>
+
+    <script>
+    function showCartPopup() {
+      const popup = document.getElementById('cart-popup');
+      const items = popup.querySelectorAll('.popup-item');
+      items.forEach(item => {
+        item.style.display = 'flex';
+      });
+      popup.style.display = 'flex';
+    }
+
+    function closeCartPopup() {
+      document.getElementById('cart-popup').style.display = 'none';
+    }
+
+    function confirmAddToCart() {
+      document.getElementById('cart-popup').style.display = 'none';
+      document.getElementById('added-popup').style.display = 'flex';
+    }
+
+    function closeAddedPopup() {
+      document.getElementById('added-popup').style.display = 'none';
+    }
+
+    function removeItem(buttonElement) {
+        const item = buttonElement.closest('.popup-item');
+        if (item) {
+            item.style.display = 'none'; 
+        }
+    }
+    </script>
 </head>
 <body>
     <header>
         <a href="./index.html" class="logo">
-            <img src="image/logo1.png" alt="禾山部長 Logo" style="height: 40px;">
-          </a>
+            <img src="image/logo1.png" alt="Silhouette Stock Logo" style="height: 40px;">
+        </a>
         <nav>
             <ul class="nav-links">
                 <li><a href="./index.html">SHOP</a></li>
@@ -27,41 +85,37 @@
 
     <main id="share-content">
         <div class="share-grid-container">
-            <!-- Placeholder Card 1 -->
             <div class="share-card">
                 <img src="./image/搭配１.webp" alt="Outfit 1">
                 <div class="card-content">
-                    <p>简短的穿搭描述 1...</p>
+                    <p>簡短的穿搭描述 1...</p>
                     <div class="card-actions">
                         <button class="like-btn">❤️</button>
-                        <button class="collect-btn">加入購物車</button>
+                        <button class="collect-btn" onclick="showCartPopup()">加入購物車</button>
                     </div>
                 </div>
             </div>
-            <!-- Placeholder Card 2 -->
             <div class="share-card">
                 <img src="./image/搭配２.webp" alt="Outfit 2">
                 <div class="card-content">
-                    <p>简短的穿搭描述 2...</p>
+                    <p>簡短的穿搭描述 2...</p>
                     <div class="card-actions">
                         <button class="like-btn">❤️</button>
-                        <button class="collect-btn">加入購物車</button>
+                        <button class="collect-btn" onclick="showCartPopup()">加入購物車</button>
                     </div>
                 </div>
             </div>
-            <!-- Placeholder Card 3 -->
             <div class="share-card">
                 <img src="./image/搭配3.jpg" alt="Outfit 3">
                 <div class="card-content">
-                    <p>简短的穿搭描述 3...</p>
+                    <p>簡短的穿搭描述 3...</p>
                     <div class="card-actions">
                         <button class="like-btn">❤️</button>
-                        <button class="collect-btn">加入購物車</button>
+                        <button class="collect-btn" onclick="showCartPopup()">加入購物車</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Video Card 1 -->
             <div class="share-card">
                 <video controls class="share-video">
                     <source src="./image/video1.mp4" type="video/mp4">
@@ -71,12 +125,11 @@
                     <p>穿搭影片一：展示整體動態感</p>
                     <div class="card-actions">
                         <button class="like-btn">❤️</button>
-                        <button class="collect-btn">加入購物車</button>
+                        <button class="collect-btn" onclick="showCartPopup()">加入購物車</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Video Card 2 -->
             <div class="share-card">
                 <video controls class="share-video">
                     <source src="./image/video2.mp4" type="video/mp4">
@@ -86,12 +139,11 @@
                     <p>穿搭影片二：模特兒走秀視角</p>
                     <div class="card-actions">
                         <button class="like-btn">❤️</button>
-                        <button class="collect-btn">加入購物車</button>
+                        <button class="collect-btn" onclick="showCartPopup()">加入購物車</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Video Card 3 -->
             <div class="share-card">
                 <video controls class="share-video">
                     <source src="./image/video3.mp4" type="video/mp4">
@@ -101,14 +153,46 @@
                     <p>穿搭影片三：風格動態展示</p>
                     <div class="card-actions">
                         <button class="like-btn">❤️</button>
-                        <button class="collect-btn">加入購物車</button>
+                        <button class="collect-btn" onclick="showCartPopup()">加入購物車</button>
                     </div>
                 </div>
             </div>
         </div>
     </main>
 
-   
-    
+    <div id="cart-popup" class="popup-overlay">
+      <div class="popup-content">
+        <div class="popup-item">
+          <img src="image/搭配3.jpg" alt="商品1">
+          <div class="popup-info">
+            <p><strong>品項：</strong>購物戰士上衣</p>
+            <p><strong>尺寸：</strong>L</p>
+            <p><strong>價錢：</strong>NT$890</p>
+          </div>
+          <button class="remove-item-btn" onclick="removeItem(this)" title="移除此項目">×</button>
+        </div>
+        <div class="popup-item">
+          <img src="image/搭配3.jpg" alt="商品2">
+          <div class="popup-info">
+            <p><strong>品項：</strong>經典牛仔褲</p>
+            <p><strong>尺寸：</strong>M</p>
+            <p><strong>價錢：</strong>NT$1080</p>
+          </div>
+          <button class="remove-item-btn" onclick="removeItem(this)" title="移除此項目">×</button>
+        </div>
+        <div class="popup-button-group">
+            <button onclick="closeCartPopup()" class="button-secondary">取消</button>
+            <button onclick="confirmAddToCart()" class="button-primary">加入購物車</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="added-popup" class="popup-overlay">
+      <div class="popup-content">
+        <h2>✔ 已加入購物車！</h2>
+        <button onclick="closeAddedPopup()" class="button-primary">確認</button>
+      </div>
+    </div>
+
 </body>
 </html>
