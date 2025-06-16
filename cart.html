@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CART</title>
+    <title>CART - Silhouette Stock</title>
     <link rel="stylesheet" href="styles.css" />
     <link rel="stylesheet" href="animations.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -27,6 +27,21 @@
         min-height: 100vh; /* 確保 body 至少佔據整個視窗高度 */
       }
 
+      /* Header 樣式 */
+      header {
+        position: relative;
+        top: 0;
+        width: 100%;
+        display: flex;
+        flex-direction: column; /* 使 logo 和 nav 垂直堆疊 */
+        align-items: center; /* 水平置中 logo 和 nav */
+        justify-content: center; /* 垂直置中 header 內容 (如果 header 高度足夠) */
+        padding-top: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #ccc;
+        background-color: transparent;
+      }
+
       header .logo img {
         height: 40px;
         width: auto;
@@ -34,7 +49,8 @@
       }
 
       nav {
-        margin-left: auto; /* 將導航推到右邊 */
+        /* 移除 margin-left: auto; 讓 nav 能夠被父元素的 align-items: center; 置中 */
+        /* margin-left: auto; */ /* 這一行被註釋掉或移除 */
       }
 
       .nav-links {
@@ -163,7 +179,7 @@
         text-align: center; /* 讓數字居中 */
       }
 
-      /* **小計的固定寬度：這才是解決您問題的關鍵！** */
+      /* 小計的固定寬度 */
       .cart-item-subtotal {
         font-size: 1rem;
         font-weight: bold;
@@ -172,10 +188,7 @@
         text-align: right;
         padding-left: 1rem;
         flex-shrink: 0; /* 防止它縮小 */
-        /* 以下是新增的關鍵屬性 */
-        min-width: 90px; /* **設定一個足夠容納四位數+NT$的最小寬度** */
-        /* 您可能需要根據實際字體和最大預期金額來微調這個值，例如 NT$9,999 的寬度 */
-        /* 對於 NT$1,000 以上，90px 應該足夠 */
+        min-width: 90px; /* 設定一個足夠容納四位數+NT$的最小寬度 */
       }
 
       .remove-item-btn {
@@ -265,7 +278,7 @@
       /* RWD 響應式調整 */
       @media (max-width: 768px) {
         header {
-          flex-direction: column;
+          flex-direction: column; /* 在小螢幕下也保持垂直堆疊 */
           padding: 1rem;
         }
 
@@ -274,8 +287,9 @@
         }
 
         nav {
-          margin-left: 0;
-          width: 100%;
+          margin-left: 0; /* 確保在小螢幕下也移除 auto margin */
+          width: 100%; /* 讓 nav 佔滿寬度以便其內容居中 */
+          text-align: center; /* 確保 nav 內部的 .nav-links 水平置中 */
         }
 
         .nav-links {
@@ -311,7 +325,6 @@
           margin-top: 1rem;
           padding-left: 0;
           text-align: center;
-          /* 在手機視圖下，小計的寬度也需要調整，以適應較窄的空間 */
           min-width: 80px; /* 根據手機字體大小微調 */
         }
         .remove-item-btn {
