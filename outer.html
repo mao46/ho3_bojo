@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="allproduct.css" />
-    <title>ALL</title>
+    <title>OUTER</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap"
       rel="stylesheet"
@@ -419,76 +419,9 @@
   </header>
 
   <body>
-    <div class="filter-icon" id="filterIcon">
-      <img
-        src="image/filter_icon.png"
-        alt="篩選"
-        style="width: 24px; height: 24px"
-      />
-    </div>
-
-    <div class="sidebar-filter" id="sidebarFilter">
-      <button class="close-btn" id="closeFilterBtn">×</button>
-      <h3>篩選商品</h3>
-      <div class="filter-group">
-        <h4>季節</h4>
-        <label
-          ><input type="checkbox" name="season" value="summer" /> 春夏</label
-        >
-        <label
-          ><input type="checkbox" name="season" value="winter" /> 秋冬</label
-        >
-        <label
-          ><input type="checkbox" name="season" value="all-season" />
-          四季</label
-        >
-      </div>
-      <div class="filter-group">
-        <h4>款式</h4>
-        <label><input type="checkbox" name="style" value="top" /> 上衣</label>
-        <label
-          ><input type="checkbox" name="style" value="bottom" /> 下身</label
-        >
-        <label
-          ><input type="checkbox" name="style" value="outerwear" /> 外套</label
-        >
-        <label
-          ><input type="checkbox" name="style" value="onepiece" /> 洋裝</label
-        >
-      </div>
-      <div class="filter-group">
-        <h4> 類別</h4>
-        <label
-          ><input type="checkbox" name="category" value="tshirt" />
-          T-shirt</label
-        >
-        <label
-          ><input type="checkbox" name="category" value="shirt" /> 襯衫</label
-        >
-        <label
-          ><input type="checkbox" name="category" value="blouse" />
-          罩衫/上衣</label
-        >
-        <label
-          ><input type="checkbox" name="category" value="pants" /> 褲子</label
-        >
-        <label
-          ><input type="checkbox" name="category" value="jacket" />
-          夾克/外套</label
-        >
-        <label
-          ><input type="checkbox" name="category" value="dress" /> 洋裝</label
-        >
-      </div>
-      <button class="apply-filter-btn" id="applyFilterBtn">套用篩選</button>
-      <button class="clear-filter-btn" id="clearFilterBtn">清除篩選</button>
-    </div>
     <div class="container">
       <div
         class="product-box"
-        data-category="tshirt"
-        data-season="summer"
-        data-style="top"
         data-name="購物戰士T-shirt（粉色回歸啦！）"
         data-price="NT$680"
         data-sizes="L,XL"
@@ -579,7 +512,8 @@
       <div
         class="product-box"
         data-category="tshirt"
-        data-season="summer"
+        data-season="all-season"
+        data-brand="品牌自製"
         data-style="top"
         data-name="🐱品牌自製-好運超人T-shirt"
         data-price="NT$680"
@@ -809,199 +743,40 @@
 <script>
   const overlay = document.getElementById("overlay");
   const cartModal = document.getElementById("cartModal");
-  let selectedSize = null;
-  let selectedColor = null;
-  let currentSlide = 0;
-  let currentProductBox = null;
+  let selectedSize = null; // 新增變數來儲存選中的尺寸
+  let selectedColor = null; // 新增變數來儲存選中的顏色
 
-  document.addEventListener("DOMContentLoaded", function () {
-    const productBoxes = document.querySelectorAll(".product-box");
-    const container = document.querySelector(".container");
-    const filterIcon = document.getElementById("filterIcon");
-    const sidebarFilter = document.getElementById("sidebarFilter");
-    const closeFilterBtn = document.getElementById("closeFilterBtn");
-    const applyFilterBtn = document.getElementById("applyFilterBtn");
-    const clearFilterBtn = document.getElementById("clearFilterBtn");
-    const filterCheckboxes = document.querySelectorAll(
-      ".sidebar-filter input[type='checkbox']"
-    );
-
-    // 將所有商品資料儲存起來，方便重複篩選
-    const allProductsData = Array.from(productBoxes).map((box) => ({
-      element: box,
-      style: box.dataset.style || "",
-      category: box.dataset.category || "",
-      season: box.dataset.season || "", // 新增 season 屬性
-      name: box.dataset.name || "",
-    }));
-
-    // --- 篩選器側邊選單開關邏輯 ---
-    filterIcon.addEventListener("click", () => {
-      sidebarFilter.classList.add("open");
-      overlay.style.display = "block"; // 開啟側邊欄時顯示遮罩
-    });
-
-    closeFilterBtn.addEventListener("click", () => {
-      sidebarFilter.classList.remove("open");
-      overlay.style.display = "none"; // 關閉側邊欄時隱藏遮罩
-    });
-
-    // 點擊遮罩時關閉側邊選單
-    overlay.addEventListener("click", () => {
-      if (sidebarFilter.classList.contains("open")) {
-        sidebarFilter.classList.remove("open");
-        overlay.style.display = "none";
-      }
-    });
-
-    // --- 商品篩選邏輯 ---
-    function applyFilters() {
-      let visibleProductCount = 0;
-      const selectedSeasons = Array.from(
-        document.querySelectorAll("input[name='season']:checked")
-      ).map((cb) => cb.value);
-      const selectedStyles = Array.from(
-        document.querySelectorAll("input[name='style']:checked")
-      ).map((cb) => cb.value);
-      const selectedCategories = Array.from(
-        document.querySelectorAll("input[name='category']:checked")
-      ).map((cb) => cb.value);
-
-      // 先移除可能存在的「無商品」訊息
-      const existingMessage = container.querySelector(".no-products-message");
-      if (existingMessage) {
-        existingMessage.remove();
-      }
-
-      allProductsData.forEach((product) => {
-        let matchesSeason =
-          selectedSeasons.length === 0 ||
-          selectedSeasons.includes(product.season);
-        let matchesStyle =
-          selectedStyles.length === 0 ||
-          selectedStyles.includes(product.style) ||
-          (selectedStyles.includes("onepiece") && product.category === "dress"); // 洋裝特殊處理
-        let matchesCategory =
-          selectedCategories.length === 0 ||
-          selectedCategories.includes(product.category);
-
-        // 判斷是否顯示：所有選中條件都必須符合 (AND 關係)
-        // 如果某個篩選組（如季節）沒有任何選項被選中，則表示該組不進行篩選，所有商品都符合該組條件。
-        let shouldDisplay = matchesSeason && matchesStyle && matchesCategory;
-
-        if (shouldDisplay) {
-          product.element.style.display = "flex";
-          visibleProductCount++;
-        } else {
-          product.element.style.display = "none";
-        }
-      });
-
-      if (visibleProductCount === 0) {
-        const noProductsMessage = document.createElement("div");
-        noProductsMessage.textContent = "此分類目前沒有商品。";
-        noProductsMessage.classList.add("no-products-message");
-        container.appendChild(noProductsMessage);
-      }
-      // 篩選後關閉側邊選單
-      sidebarFilter.classList.remove("open");
-      overlay.style.display = "none";
-    }
-
-    // 「套用篩選」按鈕
-    applyFilterBtn.addEventListener("click", applyFilters);
-
-    // 「清除篩選」按鈕
-    clearFilterBtn.addEventListener("click", () => {
-      filterCheckboxes.forEach((checkbox) => {
-        checkbox.checked = false; // 清除所有勾選
-      });
-      applyFilters(); // 重新應用篩選 (即顯示所有商品)
-    });
-
-    // --- 頁面載入時的初始篩選 ---
-    // 預設顯示所有商品，並關聯到篩選器中的「所有商品」的概念
-    // 如果頁面是特定的分類頁，可以在這裡預先勾選對應的篩選器
-    const path = window.location.pathname;
-    let initialFilterValue = "all"; // 預設所有商品
-
-    if (path.includes("top.html")) {
-      document.querySelector("input[name='style'][value='top']").checked = true;
-      initialFilterValue = "custom"; // 表示非 'all' 的自定義篩選
-    } else if (path.includes("bottom.html")) {
-      document.querySelector(
-        "input[name='style'][value='bottom']"
-      ).checked = true;
-      initialFilterValue = "custom";
-    } else if (path.includes("outer.html")) {
-      document.querySelector(
-        "input[name='style'][value='outerwear']"
-      ).checked = true;
-      initialFilterValue = "custom";
-    } else if (path.includes("dress.html")) {
-      // 洋裝可以同時勾選 style 和 category，看您的偏好
-      document.querySelector(
-        "input[name='category'][value='dress']"
-      ).checked = true;
-      initialFilterValue = "custom";
-    } else if (path.includes("acc.html")) {
-      // 如果有配件的 data 屬性，這裡可以勾選
-      // document.querySelector("input[name='category'][value='accessories']").checked = true;
-      initialFilterValue = "custom";
-    }
-
-    // 應用初始篩選狀態
-    applyFilters();
-
-    // --- 彈窗相關 JavaScript (保持不變) ---
-
-    // 整個商品區都可以點
-    productBoxes.forEach((box) => {
-      box.addEventListener("click", function () {
-        openModalFor(this);
-      });
-    });
-
-    // 但「加入購物車按鈕」點了不會重複觸發父層 click
-    document.querySelectorAll(".add-to-bag").forEach((button) => {
-      button.addEventListener("click", function (event) {
-        event.stopPropagation(); // ✨ 阻止事件冒泡
-        openModalFor(this.closest(".product-box"));
-      });
-    });
-  });
-
-  // 開啟商品詳情彈窗函式
   function openModalFor(productBox) {
-    currentProductBox = productBox;
     const name = productBox.dataset.name;
     const price = productBox.dataset.price;
     const sizeInfo = productBox.dataset.sizeInfo
       ? productBox.dataset.sizeInfo.replace(/\\n/g, "<br>")
-      : "無尺寸資訊";
+      : "無尺寸資訊"; // 檢查是否存在
     const care = productBox.dataset.care
       ? productBox.dataset.care.replace(/；/g, "<br>")
-      : "無洗滌建議";
+      : "無洗滌建議"; // 檢查是否存在
     const notice = productBox.dataset.notice
       ? productBox.dataset.notice.replace(/；/g, "<br>")
-      : "無購買須知";
+      : "無購買須知"; // 檢查是否存在
     const images = productBox.dataset.images
       ? productBox.dataset.images.split(",")
-      : [];
+      : []; // 檢查是否存在
     const sizes = productBox.dataset.sizes
       ? productBox.dataset.sizes.split(",")
-      : [];
+      : []; // 獲取尺寸陣列
     const colors = productBox.dataset.colors
       ? productBox.dataset.colors.split(",")
-      : [];
+      : []; // 獲取顏色陣列
 
-    selectedSize = null;
-    selectedColor = null;
+    window.currentProductBox = productBox;
+    selectedSize = null; // 打開彈窗時重置選中的尺寸
+    selectedColor = null; // 打開彈窗時重置選中的顏色
 
     const carouselSlides = images
       .map((img) => `<img src="${img.trim()}" class="carousel-img">`)
       .join("");
 
+    // 生成尺寸按鈕
     const sizeButtons = sizes
       .map(
         (size) =>
@@ -1009,6 +784,7 @@
       )
       .join("");
 
+    // 生成顏色按鈕
     const colorButtons = colors
       .map(
         (color) =>
@@ -1058,33 +834,41 @@
       <h3>🌸 購買須知：</h3>
       <div>${notice}</div>
     </div>
-    `;
+  `;
 
     currentSlide = 0;
     updateSlide();
     overlay.style.display = "block";
     cartModal.style.display = "block";
 
+    // 為尺寸按鈕添加事件監聽器
     document.querySelectorAll(".size-button").forEach((button) => {
       button.addEventListener("click", function () {
+        // 移除所有按鈕的 selected 類別
         document.querySelectorAll(".size-button").forEach((btn) => {
           btn.classList.remove("selected");
         });
+        // 為當前點擊的按鈕添加 selected 類別
         this.classList.add("selected");
-        selectedSize = this.dataset.size;
+        selectedSize = this.dataset.size; // 更新選中的尺寸
       });
     });
 
+    // 為顏色按鈕添加事件監聽器 (新增)
     document.querySelectorAll(".color-button").forEach((button) => {
       button.addEventListener("click", function () {
+        // 移除所有按鈕的 selected 類別
         document.querySelectorAll(".color-button").forEach((btn) => {
           btn.classList.remove("selected");
         });
+        // 為當前點擊的按鈕添加 selected 類別
         this.classList.add("selected");
-        selectedColor = this.dataset.color;
+        selectedColor = this.dataset.color; // 更新選中的顏色
       });
     });
   }
+
+  let currentSlide = 0;
 
   function moveSlide(direction) {
     const track = document.querySelector(".carousel-track");
@@ -1092,15 +876,13 @@
     const totalSlides = slides.length;
 
     currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
-    if (track) {
-      track.style.transform = `translateX(-${currentSlide * 100}%)`;
-    }
+    track.style.transform = `translateX(-${currentSlide * 100}%)`;
   }
 
   function updateSlide() {
     const track = document.querySelector(".carousel-track");
     if (track) {
-      track.style.transform = `translateX(0%)`;
+      track.style.transform = `translateX(0%)`; // 重置位置
     }
   }
 
@@ -1109,18 +891,38 @@
     cartModal.style.display = "none";
   }
 
+  document.addEventListener("DOMContentLoaded", function () {
+    // 整個商品區都可以點
+    document.querySelectorAll(".product-box").forEach((box) => {
+      box.addEventListener("click", function () {
+        openModalFor(box);
+      });
+    });
+
+    // 但「加入購物車按鈕」點了不會重複觸發父層 click
+    document.querySelectorAll(".add-to-bag").forEach((button) => {
+      button.addEventListener("click", function (event) {
+        event.stopPropagation(); // ✨ 阻止事件冒泡
+        openModalFor(this.closest(".product-box"));
+      });
+    });
+  });
+
   function addToCart() {
-    const productBox = currentProductBox;
+    const productBox = window.currentProductBox;
     const name = productBox.dataset.name;
     const price = productBox.dataset.price;
     const image = productBox.querySelector(".product-image").src;
     const quantity = parseInt(document.getElementById("quantitySelect").value);
 
+    // 檢查是否已選擇顏色 (新增檢查)
     if (!selectedColor && productBox.dataset.colors) {
+      // 只有當商品有顏色選項時才檢查
       showCustomAlert("請選擇顏色！");
       return;
     }
 
+    // 檢查是否已選擇尺寸
     if (!selectedSize) {
       showCustomAlert("請選擇尺寸！");
       return;
@@ -1129,8 +931,8 @@
     const item = {
       name,
       price,
-      size: selectedSize,
-      color: selectedColor,
+      size: selectedSize, // 使用選中的尺寸
+      color: selectedColor, // 使用選中的顏色 (新增)
       quantity,
       image,
     };
@@ -1142,6 +944,7 @@
     window.location.href = "cart.html";
   }
 
+  // 自定義提示框函數 (從 addToCart 中提取出來，方便重複使用)
   function showCustomAlert(message) {
     const customAlert = document.createElement("div");
     customAlert.style.cssText = `
@@ -1149,7 +952,7 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        background-color: #5A4B4B;
+        background-color: #5A4B4B; /* 與選中尺寸按鈕顏色一致 */
         color: white;
         padding: 20px 30px;
         border-radius: 8px;
@@ -1164,10 +967,12 @@
     customAlert.textContent = message;
     document.body.appendChild(customAlert);
 
+    // 淡入效果
     setTimeout(() => {
       customAlert.style.opacity = "1";
     }, 10);
 
+    // 淡出並移除效果
     setTimeout(() => {
       customAlert.style.opacity = "0";
       customAlert.addEventListener(
@@ -1175,6 +980,77 @@
         () => customAlert.remove(),
         { once: true }
       );
-    }, 2000);
+    }, 2000); // 顯示 2 秒
   }
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const productBoxes = document.querySelectorAll(".product-box");
+    const container = document.querySelector(".container"); // 獲取商品容器
+    let targetStyle = "outer"; // 用於 'top', 'bottom', 'outer'
+    let targetCategory = ""; // 用於 'dress' (或更精確的分類)
+    let visibleProductCount = 0; // 新增變數來計數顯示的商品
+
+    // 根據當前頁面 URL 判斷篩選條件
+    const path = window.location.pathname;
+
+    if (path.includes("top.html")) {
+      targetStyle = "top";
+    } else if (path.includes("bottom.html")) {
+      targetStyle = "bottom";
+    } else if (path.includes("outer.html")) {
+      targetStyle = "outerwear"; // 'outer' 頁面對應 data-style="outerwear"
+    } else if (path.includes("dress.html")) {
+      targetCategory = "dress"; // 'dress' 頁面對應 data-category="dress"
+    } else if (path.includes("acc.html")) {
+      // 根據您提供的 allproduct.html，目前沒有明確的 'acc' (配件) 分類
+      // 如果未來有，您可以添加類似 targetCategory = "accessories";
+      console.log(
+        "目前 'acc.html' 頁面在 allproduct.html 中沒有找到明確的分類商品。"
+      );
+      // 在此頁面，我們依然會讓下面的循環運行，以便統一處理 '無商品' 的邏輯
+    }
+
+    productBoxes.forEach((box) => {
+      const productStyle = box.dataset.style;
+      const productCategory = box.dataset.category;
+
+      let shouldDisplay = false;
+
+      if (targetStyle) {
+        // 如果設定了 style 篩選條件
+        shouldDisplay = productStyle === targetStyle;
+      } else if (targetCategory) {
+        // 如果設定了 category 篩選條件
+        shouldDisplay =
+          productCategory === targetCategory || productStyle === "onepiece"; // dress 頁面也包含 onepiece style
+      } else if (path.includes("acc.html")) {
+        // 特殊處理 'acc.html' 頁面，如果沒有明確的 'acc' 分類商品，則不顯示任何商品
+        shouldDisplay = false;
+      }
+
+      if (!shouldDisplay) {
+        box.style.display = "none"; // 隱藏不符合條件的商品
+      } else {
+        box.style.display = "flex"; // 顯示符合條件的商品
+        visibleProductCount++; // 計數顯示的商品
+      }
+    });
+
+    // 檢查是否有商品被顯示，如果沒有，則顯示「無商品」訊息
+    if (visibleProductCount === 0) {
+      const noProductsMessage = document.createElement("div");
+      noProductsMessage.textContent = "此分類目前沒有商品。";
+      noProductsMessage.style.cssText = `
+        width: 100%;
+        text-align: center;
+        padding: 50px 0;
+        font-size: 20px;
+        color: #666;
+        grid-column: 1 / -1; /* 讓訊息跨越所有欄位 */
+      `;
+      container.appendChild(noProductsMessage);
+    }
+  });
 </script>

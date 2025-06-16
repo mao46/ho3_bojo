@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="allproduct.css" />
-    <title>ALL</title>
+    <title>ACC</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap"
       rel="stylesheet"
@@ -444,40 +444,20 @@
         >
       </div>
       <div class="filter-group">
-        <h4>款式</h4>
-        <label><input type="checkbox" name="style" value="top" /> 上衣</label>
+        <h4>類別</h4>
         <label
-          ><input type="checkbox" name="style" value="bottom" /> 下身</label
+          ><input type="checkbox" name="category" value="" />
+          項鍊</label
         >
         <label
-          ><input type="checkbox" name="style" value="outerwear" /> 外套</label
+          ><input type="checkbox" name="category" value="" /> 手鍊</label
         >
         <label
-          ><input type="checkbox" name="style" value="onepiece" /> 洋裝</label
-        >
-      </div>
-      <div class="filter-group">
-        <h4> 類別</h4>
-        <label
-          ><input type="checkbox" name="category" value="tshirt" />
-          T-shirt</label
+          ><input type="checkbox" name="category" value="" />
+          皮帶</label
         >
         <label
-          ><input type="checkbox" name="category" value="shirt" /> 襯衫</label
-        >
-        <label
-          ><input type="checkbox" name="category" value="blouse" />
-          罩衫/上衣</label
-        >
-        <label
-          ><input type="checkbox" name="category" value="pants" /> 褲子</label
-        >
-        <label
-          ><input type="checkbox" name="category" value="jacket" />
-          夾克/外套</label
-        >
-        <label
-          ><input type="checkbox" name="category" value="dress" /> 洋裝</label
+          ><input type="checkbox" name="category" value="" /> 帽子</label
         >
       </div>
       <button class="apply-filter-btn" id="applyFilterBtn">套用篩選</button>
@@ -1177,4 +1157,76 @@
       );
     }, 2000);
   }
+</script>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const productBoxes = document.querySelectorAll(".product-box");
+    const container = document.querySelector(".container"); // 獲取商品容器
+    let targetStyle = "acc"; // 用於 'top', 'bottom', 'outer'
+    let targetCategory = ""; // 用於 'dress' (或更精確的分類)
+    let visibleProductCount = 0; // 新增變數來計數顯示的商品
+
+    // 根據當前頁面 URL 判斷篩選條件
+    const path = window.location.pathname;
+
+    if (path.includes("top.html")) {
+      targetStyle = "top";
+    } else if (path.includes("bottom.html")) {
+      targetStyle = "bottom";
+    } else if (path.includes("outer.html")) {
+      targetStyle = "outerwear"; // 'outer' 頁面對應 data-style="outerwear"
+    } else if (path.includes("dress.html")) {
+      targetCategory = "dress"; // 'dress' 頁面對應 data-category="dress"
+    } else if (path.includes("acc.html")) {
+      // 根據您提供的 allproduct.html，目前沒有明確的 'acc' (配件) 分類
+      // 如果未來有，您可以添加類似 targetCategory = "accessories";
+      console.log(
+        "目前 'acc.html' 頁面在 allproduct.html 中沒有找到明確的分類商品。"
+      );
+      // 在此頁面，我們依然會讓下面的循環運行，以便統一處理 '無商品' 的邏輯
+    }
+
+    productBoxes.forEach((box) => {
+      const productStyle = box.dataset.style;
+      const productCategory = box.dataset.category;
+
+      let shouldDisplay = false;
+
+      if (targetStyle) {
+        // 如果設定了 style 篩選條件
+        shouldDisplay = productStyle === targetStyle;
+      } else if (targetCategory) {
+        // 如果設定了 category 篩選條件
+        shouldDisplay =
+          productCategory === targetCategory || productStyle === "onepiece"; // dress 頁面也包含 onepiece style
+      } else if (path.includes("acc.html")) {
+        // 特殊處理 'acc.html' 頁面，如果沒有明確的 'acc' 分類商品，則不顯示任何商品
+        shouldDisplay = false;
+      }
+
+      if (!shouldDisplay) {
+        box.style.display = "none"; // 隱藏不符合條件的商品
+      } else {
+        box.style.display = "flex"; // 顯示符合條件的商品
+        visibleProductCount++; // 計數顯示的商品
+      }
+    });
+
+    // 檢查是否有商品被顯示，如果沒有，則顯示「無商品」訊息
+    if (visibleProductCount === 0) {
+      const noProductsMessage = document.createElement("div");
+      noProductsMessage.textContent = "此分類目前沒有商品。";
+      noProductsMessage.style.cssText = `
+        width: 100%;
+        text-align: center;
+        padding: 50px 0;
+        font-size: 20px;
+        color: #666;
+        grid-column: 1 / -1; /* 讓訊息跨越所有欄位 */
+      `;
+      container.appendChild(noProductsMessage);
+    }
+  });
 </script>
