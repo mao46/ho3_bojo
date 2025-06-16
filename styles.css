@@ -821,6 +821,40 @@ header nav .nav-links a {
 header nav .nav-links a:hover {
     color: #f46c6c;
 }
+nav ul.nav-links li {
+  position: relative;
+}
+
+nav ul.nav-links li .dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: white;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  flex-direction: column;
+}
+
+nav ul.nav-links li .dropdown li a {
+  display: block;
+  padding: 10px 16px;
+  color: #1f1f1f;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+nav ul.nav-links li .dropdown li a:hover {
+  background-color: #f8f8f8;
+  color: #f46c6c;
+}
+
+nav ul.nav-links li:hover .dropdown {
+  display: flex;
+}
 body.no-scroll {
     overflow-y: hidden;
 }

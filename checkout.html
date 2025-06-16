@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>結帳 - Silhouette Stock</title>
+  <title>CHECKOUT - Silhouette Stock</title>
   <link rel="stylesheet" href="styles.css" />
   <style>
     body {
@@ -93,7 +93,7 @@
     }
     .form-group label {
       display: block;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       margin-bottom: 0.3rem;
     }
     .form-group input,
@@ -102,22 +102,6 @@
       padding: 0.6rem;
       border-radius: 6px;
       border: 1px solid #ccc;
-      font-size: 0.95rem;
-    }
-
-    fieldset {
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      padding: 1rem 1.2rem;
-      margin-bottom: 2rem;
-      background-color: #fdfdfd;
-    }
-
-    legend {
-      font-size: 1rem;
-      font-weight: bold;
-      padding: 0 0.5rem;
-      color: #444;
     }
 
     .order-summary {
@@ -153,22 +137,7 @@
   </style>
 </head>
 <body>
-  <header>
-    <a href="./index.html" class="logo">
-      <img src="image/logo1.png" alt="Silhouette Stock Logo" style="height: 40px;">
-    </a>
-    <nav>
-      <ul class="nav-links">
-        <li><a href="./index.html" class="active">SHOP</a></li>
-        <li><a href="./share.html">SHARE</a></li>
-        <li><a href="./about.html">ABOUT</a></li>
-        <li><a href="./help.html">HELP</a></li>
-        <li><a href="./cart.html">CART</a></li>
-        <li><a href="./information.html">INFORMATION</a></li>
-      </ul>
-    </nav>
-  </header>
-
+  <header>Silhouette Stock</header>
   <div class="checkout-container">
     <div style="margin: 1rem 0;">
       <a href="cart.html" style="text-decoration: none; color: #666; font-size: 0.9rem;">← 返回購物車</a>
@@ -199,79 +168,27 @@
           </div>
         </div>
 
-        <h3>結帳資訊</h3>
-        <form id="checkout-form">
-          <fieldset>
-            <legend>付款人資訊</legend>
-            <div class="form-group">
-              <label for="name">姓名：</label>
-              <input type="text" id="name" name="name" required>
-            </div>
-            <div class="form-group">
-              <label for="phone">電話：</label>
-              <input type="tel" id="phone" name="phone" required>
-            </div>
-          </fieldset>
-
-          <fieldset>
-            <legend>收件人資訊</legend>
-            <div class="form-group" style="display: flex; align-items: center; gap: 0.5rem;">
-              <input type="checkbox" id="same-as-payer" onchange="toggleRecipientFields()" style="margin: 0;" />
-              <label for="same-as-payer" style="margin: 0;">收件人與付款人相同</label>
-            </div>
-            <div id="recipient-fields">
-              <div class="form-group">
-                <label for="recipient-name">姓名：</label>
-                <input type="text" id="recipient-name" name="recipient-name">
-              </div>
-              <div class="form-group">
-                <label for="recipient-phone">電話：</label>
-                <input type="tel" id="recipient-phone" name="recipient-phone">
-              </div>
-              <div class="form-group">
-                <label for="recipient-address">地址：</label>
-                <input type="text" id="recipient-address" name="recipient-address">
-              </div>
-            </div>
-          </fieldset>
-
-          <fieldset>
-            <legend>寄件資訊</legend>
-            <div class="form-group">
-              <label for="delivery-method">寄件方式：</label>
-              <select id="delivery-method" name="delivery-method" onchange="toggleDeliveryFields()" required>
-                <option value="">請選擇</option>
-                <option value="store">超商</option>
-                <option value="home">宅配</option>
-              </select>
-            </div>
-            <div id="store-fields" class="form-group" style="display:none;">
-              <label for="store-name">超商店名：</label>
-              <input type="text" id="store-name" name="store-name">
-            </div>
-            <div id="home-fields" class="form-group" style="display:none;">
-              <label for="address">宅配地址：</label>
-              <input type="text" id="address" name="address">
-            </div>
-            <div class="form-group">
-              <label>送貨地點</label>
-              <select>
-                <option>台灣</option>
-              </select>
-            </div>
-          </fieldset>
-
-          <fieldset>
-            <legend>付款方式</legend>
-            <div class="form-group">
-              <label>付款方式</label>
-              <select>
-                <option>信用卡（Visa / Master / JCB）</option>
-                <option>LINE Pay</option>
-              </select>
-            </div>
-          </fieldset>
-        </form>
+        <h3>選擇送貨及付款方式</h3>
+        <div class="form-group">
+          <label>送貨地點</label>
+          <select>
+            <option>台灣</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>送貨方式</label>
+          <select>
+            <option>宅配寄送</option>
+            <option>超商取貨</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>付款方式</label>
+          <select>
+            <option>信用卡（Visa / Master / JCB）</option>
+            <option>LINE Pay</option>
+          </select>
+        </div>
       </div>
 
       <div class="checkout-right">
@@ -286,19 +203,8 @@
       </div>
     </div>
   </div>
-
-  <script>
-    function toggleDeliveryFields() {
-      const method = document.getElementById('delivery-method').value;
-      document.getElementById('store-fields').style.display = method === 'store' ? 'block' : 'none';
-      document.getElementById('home-fields').style.display = method === 'home' ? 'block' : 'none';
-    }
-
-    function toggleRecipientFields() {
-      const isSame = document.getElementById('same-as-payer').checked;
-      const recipientFields = document.getElementById('recipient-fields');
-      recipientFields.style.display = isSame ? 'none' : 'block';
-    }
-  </script>
+  <footer>
+    &copy; 2025 禾山部長. All Rights Reserved.
+  </footer>
 </body>
 </html>
